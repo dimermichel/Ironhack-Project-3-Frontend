@@ -30,13 +30,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MenuAppBar() {
   const classes = useStyles();
-  const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -47,11 +42,10 @@ export default function MenuAppBar() {
   };
 
   return (
-    
     <AuthContext.Consumer>
     { context => {
-            const {user} = context.state
-            const { handleLogout } = context
+            const { isLoggedIn } = context.state;
+            const { handleLogout, handleToggle } = context
             
             return (
     <div className={classes.root}>          
@@ -63,49 +57,52 @@ export default function MenuAppBar() {
           <Typography variant="h6" className={classes.title}>
             Travelpacking
           </Typography>
-            <Link to="/signup" style={{ textDecoration: 'none' , color: 'white'}}>
+          {isLoggedIn ? (
+                <div>
+                <IconButton
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={open}
+                  onClose={handleClose}>
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </Menu>
+              </div>
+              ) : (
+                <>
+                  <Link to="/signup" style={{ textDecoration: 'none' , color: 'white'}}>
                 <Button color="inherit">Sign Up</Button>
-            </Link>
-            <Link to="/login" style={{ textDecoration: 'none' , color: 'white'}}>
-                <Button color="inherit">Login</Button>
-            </Link>
-          {auth && (
-            <div>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}>
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
-              </Menu>
-            </div>
-          )}
+                </Link>
+                <Link to="/login" style={{ textDecoration: 'none' , color: 'white'}}>
+                    <Button color="inherit">Login</Button>
+                </Link>
+                </>
+              )}
         </Toolbar>
       </AppBar>
             
       <FormGroup>
         <FormControlLabel
-          control={<Switch checked={auth} onChange={handleChange} aria-label="login switch" />}
-          label={auth ? 'Logout' : 'Login'}
+          control={<Switch checked={isLoggedIn} onChange={handleToggle} aria-label="login switch" />}
+          label={isLoggedIn ? 'Logout' : 'Login'}
         />
       </FormGroup>
     </div>

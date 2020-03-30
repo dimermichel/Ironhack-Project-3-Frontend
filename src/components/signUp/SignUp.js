@@ -16,6 +16,7 @@ import { AuthContext } from '../context/index'
 import {createMuiTheme} from "@material-ui/core";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
+import { withRouter, useHistory } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,8 +50,16 @@ const themeBtn = createMuiTheme({
   }
 });
 
-export default function SignUp() {
+
+
+function SignUp(props) {
   const classes = useStyles();
+  let history = useHistory();
+
+  const handleGithub = () => {
+    history.push('/auth/github')
+    //.then(res => console.log(res))
+  }
 
   return (
       
@@ -71,16 +80,20 @@ export default function SignUp() {
             return (
               <>
                 <ThemeProvider theme={themeBtn}>
+                {/* <a href="/auth/github"> */}
                 <Button
                     type="submit"
                     fullWidth
                     variant="contained"
                     color="primary"
                     className={classes.submit}
-                    onClick={handleSignupGithubSubmit}
+                    onClick={handleGithub}
                   >
+                  
                   <FontAwesomeIcon icon={faGithub} />  Log In with github
+                 
                 </Button>
+                {/* </a> */}
                 </ThemeProvider>
           <Typography variant="subtitle1" gutterBottom>
           Or Be Classical 
@@ -161,3 +174,5 @@ export default function SignUp() {
     </Container>
   );
 }
+
+export default withRouter(SignUp);

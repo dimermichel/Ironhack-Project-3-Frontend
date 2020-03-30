@@ -1,16 +1,26 @@
-import React, { Component } from 'react'
+  
+import React, { Component } from 'react';
 
-import { AuthContext } from '../context/index'
-
+import { AuthContext } from '../../components/context/index';
 export default class Private extends Component {
+  componentDidMount() {
+     console.log('--------------> ', this.context.state);
 
-    render() {
-        return (
-            <div>
-                <h1>Private page.</h1>
-            </div>
-        )
+    if (!this.context.state.isLoggedIn) {
+      return this.props.history.push('/signup');
     }
+  }
+  render() {
+     console.log('++++++++++++++++> ', this.context.state);
+
+    const { username } = this.context.state.user;
+    return (
+      <>
+        <h3>A very private page!</h3>
+        <h2>User in the session is: {username}</h2>
+      </>
+    );
+  }
 }
 
 Private.contextType = AuthContext;

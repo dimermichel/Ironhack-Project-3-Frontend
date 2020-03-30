@@ -6,6 +6,7 @@ import Album from './components/album/Album'
 import Navbar from './components/navBar/NavBar'
 import Footer from './components/footer/Footer'
 import Dashboard from './views/Dashboard/Dashbord'
+import Private from './components/private/Private'
 import './App.css';
 
 
@@ -17,6 +18,7 @@ function App() {
         <Route exact path='/dashboard' component={Dashboard} />
         <Route exact path='/login' component={LogIn} />
         <Route exact path='/signup' component={SignUp} />
+        <Route exact path='/private' component={Private} />
         <Route exact path='/' component={Album} />
       </Switch>
       <Footer />

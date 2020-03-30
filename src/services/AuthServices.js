@@ -6,7 +6,7 @@ console.log(baseURL)
 
 const service = axios.create({
     baseURL,
-    //withCredentials: true
+    withCredentials: true
 });
 
 const AUTH_SERVICE = {
