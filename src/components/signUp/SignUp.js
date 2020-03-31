@@ -80,20 +80,20 @@ function SignUp(props) {
             return (
               <>
                 <ThemeProvider theme={themeBtn}>
-                {/* <a href="/auth/github"> */}
+                <a href="/auth/github" style={{textDecoration: 'none'}}>
                 <Button
                     type="submit"
                     fullWidth
                     variant="contained"
                     color="primary"
                     className={classes.submit}
-                    onClick={handleGithub}
+                    //onClick={handleGithub}
                   >
                   
                   <FontAwesomeIcon icon={faGithub} />  Log In with github
                  
                 </Button>
-                {/* </a> */}
+                </a>
                 </ThemeProvider>
           <Typography variant="subtitle1" gutterBottom>
           Or Be Classical 
