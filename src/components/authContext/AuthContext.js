@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom';
+//import { withRouter } from 'react-router-dom';
 import AUTH_SERVICE from '../../services/AuthServices'
 
-export const AuthContext = React.createContext();
+const AuthContext = React.createContext();
 
-let login = false
 class AuthProvider extends Component {
 
     state = {
@@ -13,7 +12,7 @@ class AuthProvider extends Component {
             email: '',
             password: ''
         },
-        user: {},
+        currentUser: {},
         isLoggedIn: false,
         message: null
     }
@@ -35,6 +34,26 @@ class AuthProvider extends Component {
             console.log('Error while getting the user: ', err.response.data)
           );
       }
+
+      componentDidUpdate() {
+            if (!this.state.currentUser && !this.state.isLoggedIn) {
+                AUTH_SERVICE.isLoggedIn()
+                .then(responseFromServer => {
+                  // console.log('res: ', responseFromServer);
+          
+                  const { user } = responseFromServer.data;
+          
+                  this.setState(prevState => ({
+                    ...prevState,
+                    currentUser: user,
+                    isLoggedIn: true
+                  }));
+                })
+                .catch(err =>
+                  console.log('Error while getting the user: ', err.response.data)
+                );
+            }
+    }
   
 
     handleSignupInput = e => {
@@ -66,7 +85,7 @@ class AuthProvider extends Component {
                       email: '',
                       password: ''
                     },
-                    user: user,
+                    currentUser: user,
                     isLoggedIn: true
                   }));
 
@@ -85,15 +104,15 @@ class AuthProvider extends Component {
         
     }
 
-    handleSignupGithubSubmit = e => {
+    // handleSignupGithubSubmit = e => {
     
-        e.preventDefault()
-        AUTH_SERVICE.signupGithub()
-            .then(response => {
-                console.log({response})
-            })
-            .catch(err => console.log(err))
-    }
+    //     e.preventDefault()
+    //     AUTH_SERVICE.signupGithub()
+    //         .then(response => {
+    //             console.log({response})
+    //         })
+    //         .catch(err => console.log(err))
+    // }
 
     handleLogout = e => {
         e.preventDefault()
@@ -109,24 +128,18 @@ class AuthProvider extends Component {
           .catch(err => alert('Error while logout: ', err));
     }
     
-    handleToggle = e => {
-        login = login ? false : true
-        this.setState(prevState => ({
-            ...prevState,
-            isLoggedIn: login
-          }));
-    }
 
     render() {
-        const { state, handleSignupInput, handleSignupSubmit, handleSignupGithubSubmit,
+
+        const { state, handleSignupInput, handleSignupSubmit,
             handleLogout, handleToggle} = this;
         return (
             <AuthContext.Provider 
             value={{
-                state, 
+                state,
+                isLoggedIn: state.isLoggedIn, 
                 handleSignupInput, 
                 handleSignupSubmit, 
-                handleSignupGithubSubmit,
                 handleLogout,
                 handleToggle }}>
                 {this.props.children}
@@ -135,4 +148,8 @@ class AuthProvider extends Component {
     }
 }
 
-export default withRouter(AuthProvider);
+const AuthConsumer = AuthContext.Consumer
+
+//export default withRouter(AuthProvider);
+
+export { AuthProvider, AuthConsumer, AuthContext }

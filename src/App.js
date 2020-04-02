@@ -7,22 +7,29 @@ import Navbar from './components/navBar/NavBar'
 import Footer from './components/footer/Footer'
 import Dashboard from './views/Dashboard/Dashbord'
 import Private from './components/private/Private'
+import ProtectedRoute from './components/protectedRoute/ProtectedRoute'
+import { AuthProvider } from './components/authContext/AuthContext'
 import './App.css';
 
 
 function App() {
   return (
-    <div className="App">
-      <Navbar/>
-      <Switch>
-        <Route exact path='/dashboard' component={Dashboard} />
-        <Route exact path='/login' component={LogIn} />
-        <Route exact path='/signup' component={SignUp} />
-        <Route exact path='/private' component={Private} />
-        <Route exact path='/' component={Album} />
-      </Switch>
-      <Footer />
-    </div>
+    <>
+      <AuthProvider>
+        <Navbar/>
+            <Switch>
+
+                {/* <Route exact path='/dashboard' component={Dashboard} /> */}
+                <Route exact path='/login' component={LogIn} />
+                <Route exact path='/signup' component={SignUp} />
+                <Route exact path='/private' component={Private} />
+                <ProtectedRoute path='/dashboard' component={Dashboard} />
+                <Route exact path='/' component={Album} />
+
+            </Switch>
+            <Footer />
+      </AuthProvider>
+    </>
   );
 }
 

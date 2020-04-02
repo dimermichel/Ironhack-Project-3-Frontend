@@ -75,6 +75,7 @@ export default function SignIn() {
           Log In
         </Typography>
         <ThemeProvider theme={themeBtn}>
+        <a href="/auth/github" style={{textDecoration: 'none', width: '100%'}}>
         <Button
             type="submit"
             fullWidth
@@ -84,6 +85,7 @@ export default function SignIn() {
           >
           <FontAwesomeIcon icon={faGithub} />  Log In with github
           </Button>
+          </a>
           </ThemeProvider>
           <Typography variant="subtitle1" gutterBottom>
           Or Be Classical 

@@ -1,7 +1,7 @@
   
 import React, { Component } from 'react';
 
-import { AuthContext } from '../../components/context/index';
+import  { AuthContext }  from '../authContext/AuthContext';
 export default class Private extends Component {
   componentDidMount() {
      console.log('--------------> ', this.context.state);
@@ -10,10 +10,11 @@ export default class Private extends Component {
       return this.props.history.push('/signup');
     }
   }
+
   render() {
      console.log('++++++++++++++++> ', this.context.state);
 
-    const { username } = this.context.state.user;
+    const { username } = this.context.state.currentUser;
     return (
       <>
         <h3>A very private page!</h3>

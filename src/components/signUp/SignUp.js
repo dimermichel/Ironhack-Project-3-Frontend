@@ -12,11 +12,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { AuthContext } from '../context/index'
+import { AuthConsumer } from '../authContext/AuthContext'
 import {createMuiTheme} from "@material-ui/core";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import { withRouter, useHistory } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -54,12 +54,6 @@ const themeBtn = createMuiTheme({
 
 function SignUp(props) {
   const classes = useStyles();
-  let history = useHistory();
-
-  const handleGithub = () => {
-    history.push('/auth/github')
-    //.then(res => console.log(res))
-  }
 
   return (
       
@@ -72,22 +66,21 @@ function SignUp(props) {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <AuthContext.Consumer>
+        <AuthConsumer>
           { context => {
             const {formSignup: {username, email, password}} = context.state
-            const { handleSignupInput, handleSignupSubmit, handleSignupGithubSubmit } = context
+            const { handleSignupInput, handleSignupSubmit } = context
             
             return (
               <>
                 <ThemeProvider theme={themeBtn}>
-                <a href="/auth/github" style={{textDecoration: 'none'}}>
+                <a href="/auth/github" style={{textDecoration: 'none', width: '100%'}}>
                 <Button
                     type="submit"
                     fullWidth
                     variant="contained"
                     color="primary"
                     className={classes.submit}
-                    //onClick={handleGithub}
                   >
                   
                   <FontAwesomeIcon icon={faGithub} />  Log In with github
@@ -169,7 +162,7 @@ function SignUp(props) {
             )
           }
       }
-      </AuthContext.Consumer>
+      </AuthConsumer>
       </div>
     </Container>
   );

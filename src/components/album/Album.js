@@ -9,6 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { Link } from 'react-router-dom'
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +51,7 @@ export default function Album() {
   const classes = useStyles();
 
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
       <main>
         {/* Hero unit */}
@@ -65,14 +67,21 @@ export default function Album() {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <Button variant="contained" color="primary">
-                    Main call to action
+                <Link to="/dashboard">
+                <Button variant="contained" color="primary">
+                    Dashboard
                   </Button>
+                </Link> 
                 </Grid>
                 <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Secondary action
+  
+                <Link to="/private">
+                <Button variant="contained" color="primary">
+                    Private
                   </Button>
+                </Link> 
+
+
                 </Grid>
               </Grid>
             </div>
@@ -116,6 +125,6 @@ export default function Album() {
 
       </footer>
       {/* End footer */}
-    </React.Fragment>
+    </>
   );
 }
