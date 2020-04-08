@@ -23,7 +23,8 @@ class AuthProvider extends Component {
             // console.log('res: ', responseFromServer);
     
             const { user } = responseFromServer.data;
-    
+            localStorage.setItem('userData', JSON.stringify({user}))
+
             this.setState(prevState => ({
               ...prevState,
               currentUser: user,
@@ -42,7 +43,8 @@ class AuthProvider extends Component {
                   // console.log('res: ', responseFromServer);
           
                   const { user } = responseFromServer.data;
-          
+                  localStorage.setItem('userData', JSON.stringify({user}))
+
                   this.setState(prevState => ({
                     ...prevState,
                     currentUser: user,
@@ -118,6 +120,7 @@ class AuthProvider extends Component {
         e.preventDefault()
         AUTH_SERVICE.logout()
         .then(() => {
+          localStorage.removeItem('userData')
             this.setState(prevState => ({
               ...prevState,
               currentUser: {},

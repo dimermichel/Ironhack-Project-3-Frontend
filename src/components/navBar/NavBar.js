@@ -96,7 +96,7 @@ export default function MenuAppBar() {
                 </Toolbar>
               </AppBar>
               {console.log(context.state)}
-              {() => console.log(new Date)()}
+              {() => console.log(new Date())}
             </div>
             )
         }

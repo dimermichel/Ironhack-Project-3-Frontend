@@ -3,13 +3,6 @@ import React, { Component } from 'react';
 
 import  { AuthContext }  from '../authContext/AuthContext';
 export default class Private extends Component {
-  componentDidMount() {
-     console.log('--------------> ', this.context.state);
-
-    if (!this.context.state.isLoggedIn) {
-      return this.props.history.push('/signup');
-    }
-  }
 
   render() {
      console.log('++++++++++++++++> ', this.context.state);
