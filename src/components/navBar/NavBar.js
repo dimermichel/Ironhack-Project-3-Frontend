@@ -10,8 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import { AuthConsumer } from '../authContext/AuthContext'
-
+import { AuthConsumer } from '../authContext/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,67 +39,78 @@ export default function MenuAppBar() {
 
   return (
     <AuthConsumer>
-    { context => {
-            const { isLoggedIn } = context;
-            const { handleLogout } = context
-            
-            return (
-            <div className={classes.root}>          
-              <AppBar position="static">
-                <Toolbar>
-                  <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                    <MenuIcon />
-                  </IconButton>
-                  <Typography variant="h6" className={classes.title}>
-                    Travelpacking
-                  </Typography>
-                  {isLoggedIn ? (
-                        <div>
-                        <IconButton
-                          aria-label="account of current user"
-                          aria-controls="menu-appbar"
-                          aria-haspopup="true"
-                          onClick={handleMenu}
-                          color="inherit"
-                        >
-                          <AccountCircle />
-                        </IconButton>
-                        <Menu
-                          id="menu-appbar"
-                          anchorEl={anchorEl}
-                          anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                          }}
-                          keepMounted
-                          transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                          }}
-                          open={open}
-                          onClose={handleClose}>
-                          <MenuItem onClick={handleClose}>Profile</MenuItem>
-                          <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                        </Menu>
-                      </div>
-                      ) : (
-                        <>
-                          <Link to="/signup" style={{ textDecoration: 'none' , color: 'white'}}>
-                        <Button color="inherit">Sign Up</Button>
-                        </Link>
-                        <Link to="/login" style={{ textDecoration: 'none' , color: 'white'}}>
-                            <Button color="inherit">Login</Button>
-                        </Link>
-                        </>
-                      )}
-                </Toolbar>
-              </AppBar>
-              {console.log(context.state)}
-              {() => console.log(new Date())}
-            </div>
-            )
-        }
-    }
+      {(context) => {
+        const { isLoggedIn } = context;
+        const { handleLogout } = context;
+
+        return (
+          <div className={classes.root}>
+            <AppBar position="static">
+              <Toolbar>
+                <IconButton
+                  edge="start"
+                  className={classes.menuButton}
+                  color="inherit"
+                  aria-label="menu"
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Typography variant="h6" className={classes.title}>
+                  Travelpacking
+                </Typography>
+                {isLoggedIn ? (
+                  <div>
+                    <IconButton
+                      aria-label="account of current user"
+                      aria-controls="menu-appbar"
+                      aria-haspopup="true"
+                      onClick={handleMenu}
+                      color="inherit"
+                    >
+                      <AccountCircle />
+                    </IconButton>
+                    <Menu
+                      id="menu-appbar"
+                      anchorEl={anchorEl}
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}
+                      open={open}
+                      onClose={handleClose}
+                    >
+                      <MenuItem onClick={handleClose}>Profile</MenuItem>
+                      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    </Menu>
+                  </div>
+                ) : (
+                  <>
+                    <Link
+                      to="/signup"
+                      style={{ textDecoration: 'none', color: 'white' }}
+                    >
+                      <Button color="inherit">Sign Up</Button>
+                    </Link>
+                    <Link
+                      to="/login"
+                      style={{ textDecoration: 'none', color: 'white' }}
+                    >
+                      <Button color="inherit">Login</Button>
+                    </Link>
+                  </>
+                )}
+              </Toolbar>
+            </AppBar>
+            {console.log(context.state)}
+            {() => console.log(new Date())}
+          </div>
+        );
+      }}
     </AuthConsumer>
   );
 }
