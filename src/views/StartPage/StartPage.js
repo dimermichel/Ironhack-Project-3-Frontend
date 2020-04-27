@@ -110,13 +110,30 @@ export default function StartPage() {
   // React Router DOM CORE
   let history = useHistory();
 
-  const handleClick = () => {
-    //history.push('/private');
-    setOpen(true);
-  };
-
-  const handleToast = () => {
-    setOpen(true);
+  const handleClick = async () => {
+    if (checkInputs()) {
+      console.log('ALL GOOD TO GO!!!');
+      try {
+        const listResponseDB = await PACKLIST_SERVICE.sendList(response.data);
+        console.log({ listResponseDB });
+        const externalAPIsResponse = await PACKLIST_SERVICE.externalAPIs(
+          placeId.googleCityId
+        );
+        console.log({ externalAPIsResponse });
+        externalAPIsResponse.data.startDate = initialDate;
+        externalAPIsResponse.data.endDate = finalDate;
+        externalAPIsResponse.data.fullList = listResponseDB.data._id;
+        const travelResponseDB = await PACKLIST_SERVICE.sendTravel(
+          externalAPIsResponse.data
+        );
+        console.log({ travelResponseDB });
+        history.push(`/travel/${travelResponseDB.data._id}`);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      setOpen(true);
+    }
   };
 
   const handleToastClose = (event, reason) => {
@@ -167,6 +184,18 @@ export default function StartPage() {
     //   );
     // });
   }
+
+  const checkInputs = () => {
+    let selectedList = false;
+    if (response.data.some((list) => list.selected === true)) {
+      console.log('Object found inside the array.');
+      selectedList = true;
+    } else {
+      console.log('Object not found.');
+      selectedList = false;
+    }
+    return placeId.googleCityId !== '' && selectedList ? true : false;
+  };
 
   return (
     <>
@@ -261,8 +290,8 @@ export default function StartPage() {
           autoHideDuration={6000}
           onClose={handleToastClose}
         >
-          <Alert onClose={handleToastClose} severity="warning">
-            Please fill all the Fields!
+          <Alert onClose={handleToastClose} severity="error">
+            Please, select a city and at least one list. 🤓
           </Alert>
         </Snackbar>
       </div>

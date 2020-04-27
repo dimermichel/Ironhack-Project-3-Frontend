@@ -4,6 +4,7 @@ import SignUp from './components/signUp/SignUp';
 import axios from 'axios';
 import LogIn from './components/logIn/LogIn';
 import Album from './components/album/Album';
+import CreatedTravelPage from './views/CreatedTravelPage/CreatedTravelPage';
 import StartPage from './views/StartPage/StartPage';
 import Navbar from './components/navBar/NavBar';
 import Footer from './components/footer/Footer';
@@ -142,6 +143,7 @@ function App() {
             {isLoggedIn ? (
               <>
                 <Route exact path="/private" component={Private} />
+                <Route exact path="/travel/:id" component={CreatedTravelPage} />
                 <ProtectedRoute path="/dashboard" component={Dashboard} />
                 <Route exact path="/" component={StartPage} />
               </>

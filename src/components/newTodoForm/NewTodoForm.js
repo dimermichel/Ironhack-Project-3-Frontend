@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import './NewTodoForm.css';
 
 const NewTodoForm = (props) => {
-  const [newTask, setTask] = useState({ name: '', id: '' });
+  const [newTask, setTask] = useState({ name: '', _id: '' });
   const handleChange = (evt) => {
     setTask({
       name: evt.target.value,
@@ -12,7 +12,7 @@ const NewTodoForm = (props) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (newTask.name !== '')
-      props.createTodo({ ...newTask, id: uuidv4(), checked: false });
+      props.createTodo({ ...newTask, _id: uuidv4(), checked: false });
     setTask({ name: '' });
   };
 

@@ -13,6 +13,22 @@ const PACKLIST_SERVICE = {
   defaultList() {
     return service.get('/api/defaultlist');
   },
+
+  sendList(data) {
+    return service.post('/api/list', data);
+  },
+
+  externalAPIs(placeId) {
+    return service.get(`/api/google/${placeId}`);
+  },
+
+  sendTravel(data) {
+    return service.post('/api/travel', data);
+  },
+
+  detailTravel(id) {
+    return service.get(`/api/travel/${id}`);
+  },
 };
 
 export default PACKLIST_SERVICE;

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Todo from '../todo/Todo';
 import NewTodoForm from '../newTodoForm/NewTodoForm';
-import { v4 as uuidv4 } from 'uuid';
 import './TodoList.css';
 
 const TodoList = (props) => {
@@ -20,7 +19,7 @@ const TodoList = (props) => {
 
   const update = (id, updatedTask) => {
     const updatedTodos = todo.items.map((todo) => {
-      if (todo.id === id) {
+      if (todo._id === id) {
         return { ...todo, name: updatedTask };
       }
       return todo;
@@ -29,11 +28,17 @@ const TodoList = (props) => {
   };
 
   const remove = (id) => {
-    setTodo({ items: todo.items.filter((el) => el.id !== id) });
+    setTodo({ items: todo.items.filter((el) => el._id !== id) });
+    console.log({ ITEMS: todo.items });
     let counter = 0;
     const arrLength = todo.items.length - 1;
+    console.log('Inside Remove');
+    console.log({ counter }, { arrLength });
     todo.items.map((todo) => {
       if (todo.checked) counter++;
+      console.log('Inside MAP ARR');
+      console.log(todo);
+      console.log({ counter }, { arrLength });
       if (counter === arrLength) {
         setCompletion({ completed: true });
       } else {
@@ -47,7 +52,7 @@ const TodoList = (props) => {
     let counter = 0;
     const arrLength = todo.items.length;
     const updatedTodos = todo.items.map((todo) => {
-      if (todo.id === id) {
+      if (todo._id === id) {
         !todo.checked && counter++;
         if (counter === arrLength) {
           if (!completion.completed) setCompletion({ completed: true });
@@ -70,8 +75,8 @@ const TodoList = (props) => {
   const todos = todo.items.map((todo) => {
     return (
       <Todo
-        key={todo.id}
-        id={todo.id}
+        key={todo._id}
+        _id={todo._id}
         name={todo.name}
         quantity={todo.quantity}
         checked={todo.checked}

@@ -10,7 +10,7 @@ const Todo = (props) => {
   const [editing, setEditing] = useState({ isEditing: false });
   const [task, setTask] = useState({ name: props.name });
   const handleRemove = () => {
-    props.removeTodo(props.id);
+    props.removeTodo(props._id);
   };
   const toggleForm = () => {
     setEditing({ isEditing: !editing.isEditing });
@@ -19,7 +19,7 @@ const Todo = (props) => {
     evt.preventDefault();
     // take new task data and pass up to parent
     console.log('Inside Handle Update', task.name);
-    props.updateTodo(props.id, task.name);
+    props.updateTodo(props._id, task.name);
     setEditing({ isEditing: false });
   };
   const handleChange = (evt) => {
@@ -28,7 +28,7 @@ const Todo = (props) => {
     });
   };
   const handleToggle = (evt) => {
-    props.toggleTodo(props.id);
+    props.toggleTodo(props._id);
   };
   let result;
   if (editing.isEditing) {
