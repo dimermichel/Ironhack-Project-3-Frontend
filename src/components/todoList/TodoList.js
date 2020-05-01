@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Todo from '../todo/Todo';
 import NewTodoForm from '../newTodoForm/NewTodoForm';
 import './TodoList.css';
@@ -11,6 +11,11 @@ const TodoList = (props) => {
   const [completion, setCompletion] = useState({
     completed: props.completed,
   });
+
+  useEffect(() => {
+    const _id = props._id;
+    props.update(_id, todo, completion);
+  }, [todo, completion]);
 
   const create = (newTodo) => {
     setTodo({ items: [...todo.items, newTodo] });

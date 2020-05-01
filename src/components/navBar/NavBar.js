@@ -4,7 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import WidgetsIcon from '@material-ui/icons/Widgets';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -53,13 +53,25 @@ export default function MenuAppBar() {
                   color="inherit"
                   aria-label="menu"
                 >
-                  <MenuIcon />
+                  <Link
+                    to="/"
+                    style={{ textDecoration: 'none', color: 'white' }}
+                  >
+                    <WidgetsIcon />
+                  </Link>
                 </IconButton>
+
                 <Typography variant="h6" className={classes.title}>
                   Travelpacking
                 </Typography>
                 {isLoggedIn ? (
                   <div>
+                    <Link
+                      to="/travels"
+                      style={{ textDecoration: 'none', color: 'white' }}
+                    >
+                      <Button color="inherit">Travels</Button>
+                    </Link>
                     <IconButton
                       aria-label="account of current user"
                       aria-controls="menu-appbar"

@@ -8,7 +8,6 @@ import GetRangeDate from '../../components/getRangeDate/GetRangeDate';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
 import Container from '@material-ui/core/Container';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import TodoList from '../../components/todoList/TodoList';
@@ -16,10 +15,8 @@ import { v4 as uuidv4 } from 'uuid';
 import PACKLIST_SERVICE from '../../services/PackListServices';
 import SelectList from '../../components/selectList/SelectList';
 import { useHistory } from 'react-router-dom';
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from '../../components/alert/Alert';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +35,14 @@ const useStyles = makeStyles((theme) => ({
   searchContent: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(1, 0, 3),
+  },
+  center: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  button: {
+    margin: theme.spacing(2),
   },
   heroButtons: {
     marginTop: theme.spacing(4),
@@ -65,6 +70,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function StartPage() {
   const [load, setLoad] = useState(false);
+  const [loadExternal, setLoadExternal] = useState(false);
   const [response, setResponse] = useState({ data: [] });
   const [open, setOpen] = useState(false);
   const [initialDate, setInitialDate] = useState(new Date());
@@ -113,6 +119,7 @@ export default function StartPage() {
   const handleClick = async () => {
     if (checkInputs()) {
       console.log('ALL GOOD TO GO!!!');
+      setLoadExternal(true);
       try {
         const listResponseDB = await PACKLIST_SERVICE.sendList(response.data);
         console.log({ listResponseDB });
@@ -128,6 +135,7 @@ export default function StartPage() {
         );
         console.log({ travelResponseDB });
         history.push(`/travel/${travelResponseDB.data._id}`);
+        setLoadExternal(false);
       } catch (err) {
         console.log(err);
       }
@@ -267,7 +275,12 @@ export default function StartPage() {
       </div>
       {/* <SelectList {...response} toggleSelect={toggleSelect} /> */}
       {responseList}
-      <div className={classes.heroButtons}>
+      <div className={classes.center}>
+        <Grid container spacing={2} justify="center">
+          <Grid item xs={6} justify="center">
+            {loadExternal && <CircularProgress />}
+          </Grid>
+        </Grid>
         <Grid container spacing={2} justify="center">
           <Grid item xs={6}>
             <Button
@@ -291,7 +304,10 @@ export default function StartPage() {
           onClose={handleToastClose}
         >
           <Alert onClose={handleToastClose} severity="error">
-            Please, select a city and at least one list. 🤓
+            Please, select a city and at least one list.{' '}
+            <span role="img" aria-label="glasses">
+              🤓
+            </span>
           </Alert>
         </Snackbar>
       </div>

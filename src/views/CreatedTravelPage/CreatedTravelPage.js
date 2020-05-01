@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import Button from '@material-ui/core/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import GetRangeDate from '../../components/getRangeDate/GetRangeDate';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
-import Container from '@material-ui/core/Container';
-import SearchBar from '../../components/SearchBar/SearchBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSave } from '@fortawesome/free-solid-svg-icons';
 import TodoList from '../../components/todoList/TodoList';
-import { v4 as uuidv4 } from 'uuid';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '../../components/alert/Alert';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import PACKLIST_SERVICE from '../../services/PackListServices';
-import SelectList from '../../components/selectList/SelectList';
 import { useHistory, useParams } from 'react-router-dom';
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import City from '../../components/city/City';
+import Weather from '../../components/weather/Weather';
+import Container from '@material-ui/core/Container';
+import Attractions from '../../components/attractions/Attractions';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,20 +23,6 @@ const useStyles = makeStyles((theme) => ({
     '& > * + *': {
       marginTop: theme.spacing(1),
     },
-  },
-  icon: {
-    marginRight: theme.spacing(2),
-  },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
-  },
-  searchContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(1, 0, 3),
-  },
-  heroButtons: {
-    marginTop: theme.spacing(4),
   },
   cardGrid: {
     paddingTop: theme.spacing(8),
@@ -57,6 +39,16 @@ const useStyles = makeStyles((theme) => ({
   cardContent: {
     flexGrow: 1,
   },
+  text: {
+    paddingTop: 40,
+    paddingLeft: '17%',
+  },
+  center: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: '6vh',
+  },
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
@@ -65,11 +57,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreatedTravelPage() {
   const [load, setLoad] = useState(false);
-  const [responseTravel, setResponseTravel] = useState({ data: {} });
+  const [loadExternal, setLoadExternal] = useState(false);
+  const [cityDetails, setCityDetails] = useState({});
+  const [fullList, setFullList] = useState({});
+  const [fullListTest, setFullListTest] = useState({});
+  const [attractions, setAttractions] = useState({ attractions: [] });
   const [open, setOpen] = useState(false);
-  //   const [initialDate, setInitialDate] = useState(new Date());
-  //   const [finalDate, setFinalDate] = useState(new Date());
-  //   const [placeId, setPlaceId] = useState({ googleCityId: '' });
+  const [initialDate, setInitialDate] = useState({ initial: new Date() });
+  const [finalDate, setFinalDate] = useState({ final: new Date() });
+  const [weather, setWeather] = useState({ weather: [] });
 
   let { id } = useParams();
   const classes = useStyles();
@@ -78,11 +74,24 @@ export default function CreatedTravelPage() {
     PACKLIST_SERVICE.detailTravel(id)
       .then((res) => {
         console.log('Inside DB Call');
-        const cityDetails = res.data;
-        console.log(cityDetails);
-        if (cityDetails) {
-          setResponseTravel({ data: cityDetails });
-          console.log({ responseTravel });
+        const cityInfo = res.data;
+        console.log(cityInfo);
+        if (cityInfo) {
+          const cityDetails = {};
+          cityDetails.city = cityInfo.city;
+          cityDetails.state_code = cityInfo.state_code;
+          cityDetails.country_code = cityInfo.country_code;
+          cityDetails.country = cityInfo.country;
+          cityDetails.imgURL = cityInfo.imgURL;
+          setCityDetails(cityDetails);
+          setFullList(cityInfo.fullList);
+          // Trying to upload the hook with updated values
+          setFullListTest(cityInfo.fullList);
+          setAttractions({ attractions: cityInfo.attractions });
+          setWeather({ weather: cityInfo.weather });
+          setInitialDate({ initial: cityInfo.startDate });
+          setFinalDate({ final: cityInfo.endDate });
+          console.log({ fullList });
           setLoad(true);
         }
       })
@@ -94,32 +103,6 @@ export default function CreatedTravelPage() {
   // React Router DOM CORE
   let history = useHistory();
 
-  const handleClick = async () => {
-    // if (checkInputs()) {
-    //   console.log('ALL GOOD TO GO!!!');
-    //   try {
-    //     const listResponseDB = await PACKLIST_SERVICE.sendList(response.data);
-    //     console.log({ listResponseDB });
-    //     const externalAPIsResponse = await PACKLIST_SERVICE.externalAPIs(
-    //       placeId.googleCityId
-    //     );
-    //     console.log({ externalAPIsResponse });
-    //     externalAPIsResponse.data.startDate = initialDate;
-    //     externalAPIsResponse.data.endDate = finalDate;
-    //     externalAPIsResponse.data.fullList = listResponseDB.data._id;
-    //     const travelResponseDB = await PACKLIST_SERVICE.sendTravel(
-    //       externalAPIsResponse.data
-    //     );
-    //     console.log({ travelResponseDB });
-    //     history.push(`/private/${travelResponseDB.data._id}`);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // } else {
-    //   setOpen(true);
-    // }
-  };
-
   const handleToastClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -127,62 +110,151 @@ export default function CreatedTravelPage() {
     setOpen(false);
   };
 
-  //   const handleGetDate = (date) => {
-  //     setInitialDate(date.start);
-  //     setFinalDate(date.end);
-  //   };
+  const handleClick = async () => {
+    console.log('ALL GOOD TO GO!!!');
+    setLoadExternal(true);
+    console.log({ fullList });
+    // try {
+    //   const listResponseDB = await PACKLIST_SERVICE.sendListUpdate(
+    //     fullList._id,
+    //     fullList.items
+    //   );
+    //   console.log({ listResponseDB });
+    //   history.push(`/`);
+    //   setLoadExternal(false);
+    // } catch (err) {
+    //   console.log(err);
+    // }
+  };
 
-  //   const handlePlaceId = (placeId) => {
-  //     setPlaceId({ googleCityId: placeId });
-  //   };
-
-  //   const toggleSelect = (id) => {
-  //     const updatedList = response.data.map((list) => {
-  //       if (list.id === id) {
-  //         return { ...list, selected: !list.selected };
-  //       }
-  //       return list;
-  //     });
-  //     console.log({ id }, { updatedList });
-  //     setResponse({ data: updatedList });
-  //   };
+  const handleListUpdate = (_id, todo, completion) => {
+    console.log({ _id }, { todo }, { completion });
+    // const oldPartOfTheList = fullList.lists.filter(
+    //   (el) => el._id !== lists.lists._id
+    // );
+    // setFullListTest({ _id: fullList._id, lists: { oldPartOfTheList, lists } });
+    // console.log({ fullListTest });
+  };
 
   let result;
-  let responseList;
+  let city;
+  let weatherList;
 
   if (load) {
-    result = responseTravel.data.fullList.lists
+    console.log({ fullList });
+    let parsedInitialDate = { initial: moment(initialDate).format('LL') };
+    let parsedFinalDate = { final: moment(finalDate).format('LL') };
+    result = fullList.lists
       .filter((list) => list.selected === true)
       .map((el) => {
         return (
-          <TodoList
-            key={el._id}
-            _id={el._id}
-            title={el.title}
-            type={el.type}
-            items={el.items}
-            completed={el.completed}
-          />
+          <Container maxWidth="lg">
+            <Grid container justify="center">
+              <Grid item xs={8} justify="center" alignItems="center">
+                <TodoList
+                  key={el._id}
+                  _id={el._id}
+                  title={el.title}
+                  type={el.type}
+                  items={el.items}
+                  completed={el.completed}
+                  update={handleListUpdate}
+                />
+              </Grid>
+            </Grid>
+          </Container>
         );
       });
+    city = (
+      <>
+        <City {...cityDetails} {...parsedFinalDate} {...parsedInitialDate} />
+        <Container maxWidth="lg">
+          <Typography
+            className={classes.text}
+            variant="h4"
+            align="left"
+            color="textPrimary"
+            gutterBottom
+          >
+            Weather
+          </Typography>
+        </Container>
+        <Weather {...weather} {...initialDate} {...finalDate} />
+        <Container maxWidth="lg">
+          <Typography
+            className={classes.text}
+            variant="h4"
+            align="left"
+            color="textPrimary"
+            gutterBottom
+          >
+            Attractions
+          </Typography>
+        </Container>
+        <Attractions {...attractions} />
+      </>
+    );
   }
-
-  //   const checkInputs = () => {
-  //     let selectedList = false;
-  //     if (response.data.some((list) => list.selected === true)) {
-  //       console.log('Object found inside the array.');
-  //       selectedList = true;
-  //     } else {
-  //       console.log('Object not found.');
-  //       selectedList = false;
-  //     }
-  //     return placeId.googleCityId !== '' && selectedList ? true : false;
-  //   };
 
   return (
     <>
-      <h1>{responseTravel.data.city}</h1>
+      <Container maxWidth="lg">
+        <Typography
+          className={classes.text}
+          variant="h4"
+          align="left"
+          color="textPrimary"
+          gutterBottom
+        >
+          Travel Details
+        </Typography>
+      </Container>
+      {city}
+      <Container maxWidth="lg">
+        <Typography
+          className={classes.text}
+          variant="h4"
+          align="left"
+          color="textPrimary"
+          gutterBottom
+        >
+          Pack your bags
+        </Typography>
+      </Container>
       {result}
+      <div className={classes.center}>
+        <Grid container spacing={2} justify="center">
+          <Grid item xs={6} justify="center">
+            {loadExternal && <CircularProgress />}
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} justify="center">
+          <Grid item xs={6}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              size="large"
+              className={classes.button}
+              onClick={handleClick}
+              endIcon={<FontAwesomeIcon icon={faSave} />}
+            >
+              Save
+            </Button>
+          </Grid>
+        </Grid>
+      </div>
+      <div className={classes.root}>
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleToastClose}
+        >
+          <Alert onClose={handleToastClose} severity="error">
+            Please, select a city and at least one list. 🤓
+          </Alert>
+        </Snackbar>
+      </div>
     </>
   );
 }

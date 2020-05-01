@@ -3,7 +3,7 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import SignUp from './components/signUp/SignUp';
 import axios from 'axios';
 import LogIn from './components/logIn/LogIn';
-import Album from './components/album/Album';
+import Travels from './views/Travels/Travels';
 import CreatedTravelPage from './views/CreatedTravelPage/CreatedTravelPage';
 import StartPage from './views/StartPage/StartPage';
 import Navbar from './components/navBar/NavBar';
@@ -130,18 +130,19 @@ function App() {
       <>
         <AuthProvider>
           <Navbar />
-          <button onClick={() => sendList()}>Send List API Test</button>
+          {/* <button onClick={() => sendList()}>Send List API Test</button>
           <button onClick={() => updateList(listId)}>
             Update List API Test
           </button>
           <button onClick={() => deleteList(listId)}>
             Delete List API Test
-          </button>
+          </button> */}
           <Switch>
             <Route exact path="/login" component={LogIn} />
             <Route exact path="/signup" component={SignUp} />
             {isLoggedIn ? (
               <>
+                <Route exact path="/travels" component={Travels} />
                 <Route exact path="/private" component={Private} />
                 <Route exact path="/travel/:id" component={CreatedTravelPage} />
                 <ProtectedRoute path="/dashboard" component={Dashboard} />

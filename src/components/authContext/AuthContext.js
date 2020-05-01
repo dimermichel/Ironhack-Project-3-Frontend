@@ -11,6 +11,10 @@ class AuthProvider extends Component {
       email: '',
       password: '',
     },
+    formLogin: {
+      email: '',
+      password: '',
+    },
     currentUser: {},
     isLoggedIn: false,
     message: null,
@@ -22,7 +26,7 @@ class AuthProvider extends Component {
         // console.log('res: ', responseFromServer);
 
         const { user } = responseFromServer.data;
-        localStorage.setItem('userData', JSON.stringify({ user }));
+        //localStorage.setItem('userData', JSON.stringify({ user }));
 
         this.setState((prevState) => ({
           ...prevState,
@@ -42,7 +46,7 @@ class AuthProvider extends Component {
           // console.log('res: ', responseFromServer);
 
           const { user } = responseFromServer.data;
-          localStorage.setItem('userData', JSON.stringify({ user }));
+          //localStorage.setItem('userData', JSON.stringify({ user }));
 
           this.setState((prevState) => ({
             ...prevState,
@@ -64,6 +68,20 @@ class AuthProvider extends Component {
       ...prevState,
       formSignup: {
         ...prevState.formSignup,
+        [name]: value,
+      },
+    }));
+    console.log(this.state.formSignup);
+  };
+
+  handleLoginInput = (e) => {
+    const {
+      target: { name, value },
+    } = e;
+    this.setState((prevState) => ({
+      ...prevState,
+      formLogin: {
+        ...prevState.formLogin,
         [name]: value,
       },
     }));
@@ -105,6 +123,40 @@ class AuthProvider extends Component {
       });
   };
 
+  handleLoginSubmit = (e) => {
+    e.preventDefault();
+
+    AUTH_SERVICE.login(this.state.formLogin)
+      .then((response) => {
+        console.log({ response });
+        const {
+          data: { user, message },
+        } = response;
+
+        this.setState((prevState) => ({
+          ...prevState,
+          formLogin: {
+            email: '',
+            password: '',
+          },
+          currentUser: user,
+          isLoggedIn: true,
+        }));
+
+        //alert(`${message}`);
+        this.props.history.push('/');
+      })
+      .catch((err) => {
+        // console.log(err.response);
+        if (err.response && err.response.data) {
+          this.setState((prevState) => ({
+            ...prevState,
+            message: err.response.data.message,
+          }));
+        }
+      });
+  };
+
   // handleSignupGithubSubmit = e => {
 
   //     e.preventDefault()
@@ -119,7 +171,7 @@ class AuthProvider extends Component {
     e.preventDefault();
     AUTH_SERVICE.logout()
       .then(() => {
-        localStorage.removeItem('userData');
+        //localStorage.removeItem('userData');
         this.setState((prevState) => ({
           ...prevState,
           currentUser: {},
@@ -135,6 +187,8 @@ class AuthProvider extends Component {
       state,
       handleSignupInput,
       handleSignupSubmit,
+      handleLoginInput,
+      handleLoginSubmit,
       handleLogout,
       handleToggle,
     } = this;
@@ -145,6 +199,8 @@ class AuthProvider extends Component {
           isLoggedIn: state.isLoggedIn,
           handleSignupInput,
           handleSignupSubmit,
+          handleLoginInput,
+          handleLoginSubmit,
           handleLogout,
           handleToggle,
         }}

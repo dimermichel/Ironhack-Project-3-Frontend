@@ -22,9 +22,12 @@
     "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.13.1",
     "react-infinite-calendar": "^2.3.1",
+    "react-moment": "^0.9.7",
     "react-places-autocomplete": "^7.2.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "react-swipeable-views": "^0.13.9",
+    "react-swipeable-views-utils": "^0.13.9",
     "react-transition-group": "^4.3.0",
     "recharts": "^1.8.5",
     "uuid": "^7.0.3"
