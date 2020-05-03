@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -95,6 +96,7 @@ export default function SelectList(props) {
                           onClick={() => props.toggle(card.id)}
                           variant="outlined"
                           color="primary"
+                          startIcon={card.selected ? <DoneOutlineIcon /> : null}
                         >
                           {card.selected ? 'Selected' : 'Select'}
                         </Button>
@@ -144,6 +146,7 @@ export default function SelectList(props) {
                           onClick={() => props.toggle(card.id)}
                           variant="outlined"
                           color="primary"
+                          startIcon={card.selected ? <DoneOutlineIcon /> : null}
                         >
                           {card.selected ? 'Selected' : 'Select'}
                         </Button>
@@ -193,6 +196,7 @@ export default function SelectList(props) {
                           onClick={() => props.toggle(card.id)}
                           variant="outlined"
                           color="primary"
+                          startIcon={card.selected ? <DoneOutlineIcon /> : null}
                         >
                           {card.selected ? 'Selected' : 'Select'}
                         </Button>
@@ -242,6 +246,7 @@ export default function SelectList(props) {
                           onClick={() => props.toggle(card.id)}
                           variant="outlined"
                           color="primary"
+                          startIcon={card.selected ? <DoneOutlineIcon /> : null}
                         >
                           {card.selected ? 'Selected' : 'Select'}
                         </Button>
@@ -291,6 +296,7 @@ export default function SelectList(props) {
                           onClick={() => props.toggle(card.id)}
                           variant="outlined"
                           color="primary"
+                          startIcon={card.selected ? <DoneOutlineIcon /> : null}
                         >
                           {card.selected ? 'Selected' : 'Select'}
                         </Button>
@@ -340,6 +346,7 @@ export default function SelectList(props) {
                           onClick={() => props.toggle(card.id)}
                           variant="outlined"
                           color="primary"
+                          startIcon={card.selected ? <DoneOutlineIcon /> : null}
                         >
                           {card.selected ? 'Selected' : 'Select'}
                         </Button>

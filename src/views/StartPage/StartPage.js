@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import GetRangeDate from '../../components/getRangeDate/GetRangeDate';
 import Typography from '@material-ui/core/Typography';
@@ -10,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import Container from '@material-ui/core/Container';
 import SearchBar from '../../components/SearchBar/SearchBar';
-import TodoList from '../../components/todoList/TodoList';
+import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
 import { v4 as uuidv4 } from 'uuid';
 import PACKLIST_SERVICE from '../../services/PackListServices';
 import SelectList from '../../components/selectList/SelectList';
@@ -207,7 +204,6 @@ export default function StartPage() {
 
   return (
     <>
-      <CssBaseline />
       {/* Hero unit */}
       <div className={classes.heroContent}>
         <Container maxWidth="sm">
@@ -290,7 +286,8 @@ export default function StartPage() {
               size="large"
               className={classes.button}
               onClick={handleClick}
-              endIcon={<FontAwesomeIcon icon={faChevronCircleRight} />}
+              startIcon={<LocalMallOutlinedIcon />}
+              // endIcon={<FontAwesomeIcon icon={faChevronCircleRight} />}
             >
               Pack Your Bags
             </Button>

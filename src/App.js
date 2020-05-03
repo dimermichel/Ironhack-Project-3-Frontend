@@ -8,8 +8,8 @@ import CreatedTravelPage from './views/CreatedTravelPage/CreatedTravelPage';
 import StartPage from './views/StartPage/StartPage';
 import Navbar from './components/navBar/NavBar';
 import Footer from './components/footer/Footer';
-import Dashboard from './views/Dashboard/Dashbord';
 import Private from './components/private/Private';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
 import { AuthProvider } from './components/authContext/AuthContext';
 import './App.css';
@@ -128,6 +128,7 @@ function App() {
     let listId = '5e92174405ee760dfea388eb';
     return (
       <>
+        <CssBaseline />
         <AuthProvider>
           <Navbar />
           {/* <button onClick={() => sendList()}>Send List API Test</button>
@@ -145,7 +146,6 @@ function App() {
                 <Route exact path="/travels" component={Travels} />
                 <Route exact path="/private" component={Private} />
                 <Route exact path="/travel/:id" component={CreatedTravelPage} />
-                <ProtectedRoute path="/dashboard" component={Dashboard} />
                 <Route exact path="/" component={StartPage} />
               </>
             ) : (

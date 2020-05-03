@@ -29,7 +29,6 @@
     "react-swipeable-views": "^0.13.9",
     "react-swipeable-views-utils": "^0.13.9",
     "react-transition-group": "^4.3.0",
-    "recharts": "^1.8.5",
     "uuid": "^7.0.3"
   },
   "scripts": {

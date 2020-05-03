@@ -6,27 +6,29 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 
 function Copyright() {
-    return (
-      <Typography variant="body2" color="textSecondary" align="center">
-        {'© '}{new Date().getFullYear()} {', made with ❤︎ by '}
-        <Link color="inherit" href="https://github.com/dimermichel">
-          Michel Maia
-        </Link>
-      </Typography>
-    );
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'© '}
+      {new Date().getFullYear()} {', made with ❤︎ by '}
+      <Link color="inherit" href="https://github.com/dimermichel">
+        Michel Maia
+      </Link>
+    </Typography>
+  );
 }
-
 
 const useStyles = makeStyles((theme) => ({
   footer: {
-    position: "fixed",
+    position: 'fixed',
     left: 0,
     bottom: 0,
-    width: "100%",
+    width: '100%',
     padding: theme.spacing(3, 2),
     marginTop: 'auto',
     backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[800],
+      theme.palette.type === 'light'
+        ? theme.palette.grey[200]
+        : theme.palette.grey[800],
   },
 }));
 

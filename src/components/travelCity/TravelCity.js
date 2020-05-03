@@ -4,6 +4,8 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
+import DeleteIcon from '@material-ui/icons/Delete';
+import ListAltOutlinedIcon from '@material-ui/icons/ListAltOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
@@ -66,6 +68,7 @@ export default function TravelCity(props) {
                     className={classes.space}
                     variant="outlined"
                     color="primary"
+                    startIcon={<ListAltOutlinedIcon />}
                   >
                     Details
                   </Button>
@@ -75,6 +78,7 @@ export default function TravelCity(props) {
                     onClick={() => props.sure(props._id)}
                     variant="outlined"
                     color="secondary"
+                    startIcon={<DeleteIcon />}
                   >
                     Delete
                   </Button>

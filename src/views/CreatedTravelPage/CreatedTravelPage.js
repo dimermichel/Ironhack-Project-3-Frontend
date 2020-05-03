@@ -15,7 +15,6 @@ import City from '../../components/city/City';
 import Weather from '../../components/weather/Weather';
 import Container from '@material-ui/core/Container';
 import Attractions from '../../components/attractions/Attractions';
-import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: '6vh',
+    marginBottom: '10vh',
   },
   footer: {
     backgroundColor: theme.palette.background.paper,
@@ -60,11 +59,10 @@ export default function CreatedTravelPage() {
   const [loadExternal, setLoadExternal] = useState(false);
   const [cityDetails, setCityDetails] = useState({});
   const [fullList, setFullList] = useState({});
-  const [fullListTest, setFullListTest] = useState({});
   const [attractions, setAttractions] = useState({ attractions: [] });
   const [open, setOpen] = useState(false);
-  const [initialDate, setInitialDate] = useState({ initial: new Date() });
-  const [finalDate, setFinalDate] = useState({ final: new Date() });
+  const [initialDate, setInitialDate] = useState({ initial: '' });
+  const [finalDate, setFinalDate] = useState({ final: '' });
   const [weather, setWeather] = useState({ weather: [] });
 
   let { id } = useParams();
@@ -85,8 +83,6 @@ export default function CreatedTravelPage() {
           cityDetails.imgURL = cityInfo.imgURL;
           setCityDetails(cityDetails);
           setFullList(cityInfo.fullList);
-          // Trying to upload the hook with updated values
-          setFullListTest(cityInfo.fullList);
           setAttractions({ attractions: cityInfo.attractions });
           setWeather({ weather: cityInfo.weather });
           setInitialDate({ initial: cityInfo.startDate });
@@ -114,26 +110,47 @@ export default function CreatedTravelPage() {
     console.log('ALL GOOD TO GO!!!');
     setLoadExternal(true);
     console.log({ fullList });
-    // try {
-    //   const listResponseDB = await PACKLIST_SERVICE.sendListUpdate(
-    //     fullList._id,
-    //     fullList.items
-    //   );
-    //   console.log({ listResponseDB });
-    //   history.push(`/`);
-    //   setLoadExternal(false);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    let copyArray = {};
+    copyArray = { ...fullList };
+    //console.log({ copyArray });
+    const newList = copyArray.lists.map((el) => {
+      el.items = el.items.map((item) => {
+        item._id = undefined;
+        return item;
+      });
+      return el;
+    });
+    copyArray.lists = newList;
+    try {
+      const listResponseDB = await PACKLIST_SERVICE.sendListUpdate(
+        fullList._id,
+        copyArray.lists
+      );
+      console.log({ listResponseDB });
+      setLoadExternal(false);
+      history.push(`/travels`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleListUpdate = (_id, todo, completion) => {
-    console.log({ _id }, { todo }, { completion });
-    // const oldPartOfTheList = fullList.lists.filter(
-    //   (el) => el._id !== lists.lists._id
-    // );
-    // setFullListTest({ _id: fullList._id, lists: { oldPartOfTheList, lists } });
-    // console.log({ fullListTest });
+    console.log({ _id, todo, completion });
+
+    let copyArray = {};
+    copyArray = { ...fullList };
+    //console.log({ copyArray });
+    const newList = copyArray.lists.map((el) => {
+      if (el._id === _id) {
+        el.items = todo.items;
+        el.completed = completion.completed;
+      }
+      return el;
+    });
+    copyArray.lists = newList;
+
+    setFullList(copyArray);
+    //console.log({ fullList });
   };
 
   let result;
@@ -142,8 +159,6 @@ export default function CreatedTravelPage() {
 
   if (load) {
     console.log({ fullList });
-    let parsedInitialDate = { initial: moment(initialDate).format('LL') };
-    let parsedFinalDate = { final: moment(finalDate).format('LL') };
     result = fullList.lists
       .filter((list) => list.selected === true)
       .map((el) => {
@@ -167,7 +182,7 @@ export default function CreatedTravelPage() {
       });
     city = (
       <>
-        <City {...cityDetails} {...parsedFinalDate} {...parsedInitialDate} />
+        <City {...cityDetails} {...initialDate} {...finalDate} />
         <Container maxWidth="lg">
           <Typography
             className={classes.text}
@@ -237,7 +252,7 @@ export default function CreatedTravelPage() {
               size="large"
               className={classes.button}
               onClick={handleClick}
-              endIcon={<FontAwesomeIcon icon={faSave} />}
+              startIcon={<FontAwesomeIcon icon={faSave} />}
             >
               Save
             </Button>

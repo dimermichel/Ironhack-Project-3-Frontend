@@ -14,7 +14,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     '& > * + *': {
       marginTop: theme.spacing(1),
+      marginBottom: '1vh',
     },
+    marginBottom: '10vh',
   },
   cardGrid: {
     paddingTop: theme.spacing(8),
@@ -40,10 +42,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     marginBottom: '6vh',
-  },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
   },
   paper: {
     width: '50%',
@@ -142,7 +140,7 @@ export default function Travels() {
   }
 
   return (
-    <>
+    <div className={classes.root}>
       <ConfirmationDialog
         id="confirmation"
         keepMounted
@@ -177,6 +175,6 @@ export default function Travels() {
         </Typography>
       </Container>
       {previousTravels}
-    </>
+    </div>
   );
 }

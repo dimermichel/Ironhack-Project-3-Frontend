@@ -12,7 +12,12 @@ const NewTodoForm = (props) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (newTask.name !== '')
-      props.createTodo({ ...newTask, _id: uuidv4(), checked: false });
+      props.createTodo({
+        ...newTask,
+        _id: uuidv4(),
+        quantity: 1,
+        checked: false,
+      });
     setTask({ name: '' });
   };
 

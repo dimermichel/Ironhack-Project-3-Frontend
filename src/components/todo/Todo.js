@@ -6,7 +6,7 @@ import { faPen } from '@fortawesome/free-solid-svg-icons';
 import './Todo.css';
 
 const Todo = (props) => {
-  console.log('Inside TODO', { props });
+  //console.log('Inside TODO', { props });
   const [editing, setEditing] = useState({ isEditing: false });
   const [task, setTask] = useState({ name: props.name });
   const handleRemove = () => {

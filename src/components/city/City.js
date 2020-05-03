@@ -6,6 +6,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,6 +18,10 @@ const useStyles = makeStyles((theme) => ({
   details: {
     display: 'flex',
     flexDirection: 'column',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
   },
   content: {
     flex: '1 0 auto',
@@ -31,6 +36,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function City(props) {
   const classes = useStyles();
+  let parsedInitialDate = moment(props.initial).format('LL');
+  let parsedFinalDate = moment(props.final).format('LL');
 
   return (
     <Container maxWidth="lg">
@@ -50,7 +57,13 @@ export default function City(props) {
                   variant="subtitle1"
                   color="textSecondary"
                 >
-                  {props.initial} - {props.final}
+                  <b>Date</b>:
+                </Typography>
+                <Typography
+                  variant="subtitle1"
+                  color="textSecondary"
+                >
+                  {parsedInitialDate} - {parsedFinalDate}
                 </Typography>
               </CardContent>
             </div>
