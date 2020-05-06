@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import Button from '@material-ui/core/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import './NewTodoForm.css';
 
 const NewTodoForm = (props) => {
@@ -32,7 +35,14 @@ const NewTodoForm = (props) => {
         value={newTask.name}
         onChange={handleChange}
       />
-      <button>Add</button>
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        startIcon={<FontAwesomeIcon icon={faPlus} />}
+      >
+        Add
+      </Button>
     </form>
   );
 };

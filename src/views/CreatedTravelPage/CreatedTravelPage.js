@@ -10,6 +10,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '../../components/alert/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import PACKLIST_SERVICE from '../../services/PackListServices';
+import Backdrop from '@material-ui/core/Backdrop';
 import { useHistory, useParams } from 'react-router-dom';
 import City from '../../components/city/City';
 import Weather from '../../components/weather/Weather';
@@ -42,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 40,
     paddingLeft: '17%',
   },
+  button: {
+    marginTop: '4vh',
+  },
   center: {
     display: 'flex',
     flexDirection: 'column',
@@ -51,6 +55,10 @@ const useStyles = makeStyles((theme) => ({
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
   },
 }));
 
@@ -155,7 +163,6 @@ export default function CreatedTravelPage() {
 
   let result;
   let city;
-  let weatherList;
 
   if (load) {
     console.log({ fullList });
@@ -238,11 +245,9 @@ export default function CreatedTravelPage() {
       </Container>
       {result}
       <div className={classes.center}>
-        <Grid container spacing={2} justify="center">
-          <Grid item xs={6} justify="center">
-            {loadExternal && <CircularProgress />}
-          </Grid>
-        </Grid>
+        <Backdrop className={classes.backdrop} open={loadExternal}>
+          {loadExternal && <CircularProgress size={60} />}
+        </Backdrop>
         <Grid container spacing={2} justify="center">
           <Grid item xs={6}>
             <Button
@@ -266,7 +271,10 @@ export default function CreatedTravelPage() {
           onClose={handleToastClose}
         >
           <Alert onClose={handleToastClose} severity="error">
-            Please, select a city and at least one list. 🤓
+            Please, select a city and at least one list.{' '}
+            <span role="img" aria-label="glass emoji">
+              🤓
+            </span>
           </Alert>
         </Snackbar>
       </div>

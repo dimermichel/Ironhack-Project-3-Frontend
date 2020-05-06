@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import Button from '@material-ui/core/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 import './Todo.css';
 
 const Todo = (props) => {
-  //console.log('Inside TODO', { props });
   const [editing, setEditing] = useState({ isEditing: false });
   const [task, setTask] = useState({ name: props.name });
   const handleRemove = () => {
@@ -18,7 +19,7 @@ const Todo = (props) => {
   const handleUpdate = (evt) => {
     evt.preventDefault();
     // take new task data and pass up to parent
-    console.log('Inside Handle Update', task.name);
+    //console.log('Inside Handle Update', task.name);
     props.updateTodo(props._id, task.name);
     setEditing({ isEditing: false });
   };
@@ -41,7 +42,14 @@ const Todo = (props) => {
             name="name"
             onChange={handleChange}
           />
-          <button>Save</button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            startIcon={<FontAwesomeIcon icon={faSave} />}
+          >
+            Save
+          </Button>
         </form>
       </div>
     );

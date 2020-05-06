@@ -1,22 +1,3 @@
-  .TodoList {
-    margin: 4rem auto;
-    padding: 2rem 3rem 3rem;
-    background: rgb(187, 187, 187);
-    border-radius: 6px;
-    border: 1px solid #aaaaaa;
-    color: rgba(0, 0, 0, 0.87);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.08);
-    overflow: hidden;
-  }
-
-  .TodoList.completed {
-    background: rgb(10, 132, 145);
-  }
-
-  .TodoList ul {
-    margin-top: 2.6rem;
-    list-style: none;
-  }
   
   .TodoList h1 {
     font-weight: normal;

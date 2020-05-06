@@ -1,6 +1,7 @@
 import React from 'react';
 import InfiniteCalendar, { Calendar, withRange } from 'react-infinite-calendar';
-import 'react-infinite-calendar/styles.css';
+//import 'react-infinite-calendar/styles.css';
+import './GetRangeDate.css';
 import { makeStyles } from '@material-ui/core/styles';
 import Popper from '@material-ui/core/Popper';
 import Fade from '@material-ui/core/Fade';
@@ -23,8 +24,6 @@ export default function GetRangeDate(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [inputField, setInputField] = React.useState('');
-  //const [initialDate, setInitialDate] = React.useState(new Date());
-  //const [finalDate, setFinalDate] = React.useState(new Date());
 
   // Limitation Due to the Weather API
   const maxDate = new Date();
@@ -73,6 +72,22 @@ export default function GetRangeDate(props) {
             <div className={classes.paper}>
               <InfiniteCalendar
                 Component={CalendarWithRange}
+                theme={{
+                  accentColor: 'rgb(212, 233, 229)',
+                  selectionColor: 'rgb(186, 218, 213)',
+                  textColor: {
+                    default: '#333',
+                    active: 'rgba(57, 96, 108, 0.96)',
+                  },
+                  todayColor: 'rgb(212, 233, 229)',
+                  weekdayColor: 'rgb(186, 218, 213)',
+                  headerColor: 'rgb(57, 96, 108)',
+                  floatingNav: {
+                    background: 'rgba(57, 96, 108, 0.96)',
+                    color: '#FFF',
+                    chevron: '#FFA726',
+                  },
+                }}
                 min={new Date()} // Minimum month to render
                 minDate={new Date()} // Minimum selectable date
                 maxDate={maxDate} // Max selectable date
@@ -81,9 +96,8 @@ export default function GetRangeDate(props) {
                   end: props.finalDate,
                 }}
                 onSelect={(date) => {
+                  // 3 => Double click event number
                   if (date.eventType === 3) {
-                    // setInitialDate(date.start);
-                    // setFinalDate(date.end);
                     props.getDate(date);
                     setInputField(
                       `${moment(date.start).format('MMMM Do YYYY')} - ${moment(

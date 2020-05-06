@@ -3,14 +3,11 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import { ThemeProvider } from '@material-ui/styles';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import purple from '@material-ui/core/colors/purple';
 import { AuthConsumer } from '../authContext/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
@@ -37,15 +34,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const theme = createMuiTheme({
-  palette: {
-    primary: purple,
-    secondary: {
-      main: '#311b92',
-    },
-  },
-});
-
 const themeBtn = createMuiTheme({
   palette: {
     primary: {
@@ -57,83 +45,34 @@ const themeBtn = createMuiTheme({
   },
 });
 
-function SignIn() {
+function SignIn(props) {
   const classes = useStyles();
 
+  //console.log({props});
   return (
-    <ThemeProvider theme={theme}>
-      <AuthConsumer>
-        {(context) => {
-          const {
-            formLogin: { email, password },
-          } = context.state;
-          const { handleLoginInput, handleLoginSubmit } = context;
+    <AuthConsumer>
+      {(context) => {
+        const {
+          formLogin: { email, password },
+        } = context.state;
+        const { handleLoginInput, handleLoginSubmit } = context;
 
-          return (
-            <>
-              <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <div className={classes.paper}>
-                  <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                  </Avatar>
-                  <Typography component="h1" variant="h5">
-                    Log In
-                  </Typography>
-                  <ThemeProvider theme={themeBtn}>
-                    <a
-                      href="/auth/github"
-                      style={{ textDecoration: 'none', width: '100%' }}
-                    >
-                      <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                      >
-                        <FontAwesomeIcon icon={faGithub} />  Log In with github
-                      </Button>
-                    </a>
-                  </ThemeProvider>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Or Be Classical
-                  </Typography>
-                  <form
-                    onSubmit={handleLoginSubmit}
-                    className={classes.form}
-                    noValidate
+        return (
+          <>
+            <Container component="main" maxWidth="xs">
+              <CssBaseline />
+              <div className={classes.paper}>
+                <Avatar className={classes.avatar}>
+                  <LockOutlinedIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                  Log In
+                </Typography>
+                <ThemeProvider theme={themeBtn}>
+                  <a
+                    href="/auth/github"
+                    style={{ textDecoration: 'none', width: '100%' }}
                   >
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      autoComplete="email"
-                      value={email}
-                      onChange={handleLoginInput}
-                      autoFocus
-                    />
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      name="password"
-                      label="Password"
-                      type="password"
-                      id="password"
-                      autoComplete="current-password"
-                      value={password}
-                      onChange={handleLoginInput}
-                    />
-                    <FormControlLabel
-                      control={<Checkbox value="remember" color="primary" />}
-                      label="Remember me"
-                    />
                     <Button
                       type="submit"
                       fullWidth
@@ -141,28 +80,66 @@ function SignIn() {
                       color="primary"
                       className={classes.submit}
                     >
-                      Sign In
+                      <FontAwesomeIcon icon={faGithub} />  Log In with github
                     </Button>
-                    <Grid container>
-                      <Grid item xs>
-                        <Link href="#" variant="body2">
-                          Forgot password?
-                        </Link>
-                      </Grid>
-                      <Grid item>
-                        <Link href="/signup" variant="body2">
-                          {"Don't have an account? Sign Up"}
-                        </Link>
-                      </Grid>
+                  </a>
+                </ThemeProvider>
+                <Typography variant="subtitle1" gutterBottom>
+                  Or Be Classical
+                </Typography>
+                <form className={classes.form}>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={handleLoginInput}
+                    autoFocus
+                  />
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    value={password}
+                    onChange={handleLoginInput}
+                  />
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={() => {
+                      handleLoginSubmit();
+                      props.history.push('/');
+                    }}
+                  >
+                    Sign In
+                  </Button>
+                  <Grid container>
+                    <Grid item>
+                      <Link href="/signup" variant="body2">
+                        {"Don't have an account? Sign Up"}
+                      </Link>
                     </Grid>
-                  </form>
-                </div>
-              </Container>
-            </>
-          );
-        }}
-      </AuthConsumer>
-    </ThemeProvider>
+                  </Grid>
+                </form>
+              </div>
+            </Container>
+          </>
+        );
+      }}
+    </AuthConsumer>
   );
 }
 

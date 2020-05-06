@@ -1,10 +1,53 @@
 import React, { useState, useEffect } from 'react';
 import Todo from '../todo/Todo';
 import NewTodoForm from '../newTodoForm/NewTodoForm';
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './TodoList.css';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: '100%',
+  },
+  media: {
+    flex: 1,
+    paddingTop: '10%', // 16:9
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  TodoList: {
+    background: 'rgb(240, 240, 240)',
+    border: 'none',
+  },
+  completed: {
+    background: '#b2dbd5',
+    border: 'none',
+  },
+  TodoItem: {
+    marginTop: '2.6rem',
+    listStyle: 'none',
+  },
+}));
 
 const TodoList = (props) => {
   console.log('Receving the first PROPS >>>>>>', { props });
+  const classes = useStyles();
+  const [expanded, setExpanded] = useState(false);
   const [todo, setTodo] = useState({
     items: props.items,
   });
@@ -77,6 +120,10 @@ const TodoList = (props) => {
     setTodo({ items: updatedTodos });
   };
 
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
   const todos = todo.items.map((todo) => {
     return (
       <Todo
@@ -91,16 +138,46 @@ const TodoList = (props) => {
       />
     );
   });
-  return (
-    <div className={completion.completed ? 'TodoList completed' : 'TodoList'}>
-      <h1>
-        {props.title}
-        <span>{props.type}</span>
-      </h1>
 
-      <ul>{todos}</ul>
-      <NewTodoForm createTodo={create} />
-    </div>
+  return (
+    <>
+      <Card
+        variant="outlined"
+        className={
+          completion.completed
+            ? classes.TodoList && classes.completed
+            : classes.TodoList
+        }
+      >
+        <CardMedia
+          className={classes.media}
+          image={`https://source.unsplash.com/800x600/?${props.title}`}
+          title={props.title}
+        />
+        <CardHeader
+          title={props.title}
+          subheader={props.type}
+          action={
+            <IconButton
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded,
+              })}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          }
+        />
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            <ul className={classes.TodoItem}>{todos}</ul>
+            <NewTodoForm createTodo={create} />
+          </CardContent>
+        </Collapse>
+      </Card>
+    </>
   );
 };
 

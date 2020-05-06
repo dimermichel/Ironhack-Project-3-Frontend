@@ -5,7 +5,6 @@ import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -55,7 +54,6 @@ export default function SelectList(props) {
   if (props.data) {
     return (
       <>
-        <CssBaseline />
         <main>
           <Container className={classes.cardGrid} maxWidth="md">
             <Typography

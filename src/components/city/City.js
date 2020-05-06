@@ -59,10 +59,7 @@ export default function City(props) {
                 >
                   <b>Date</b>:
                 </Typography>
-                <Typography
-                  variant="subtitle1"
-                  color="textSecondary"
-                >
+                <Typography variant="subtitle1" color="textSecondary">
                   {parsedInitialDate} - {parsedFinalDate}
                 </Typography>
               </CardContent>

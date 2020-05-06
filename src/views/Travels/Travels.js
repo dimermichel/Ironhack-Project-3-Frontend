@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import PACKLIST_SERVICE from '../../services/PackListServices';
-import { useHistory } from 'react-router-dom';
 import TravelCity from '../../components/travelCity/TravelCity';
 import Container from '@material-ui/core/Container';
 import ConfirmationDialog from '../../components/confirmationDialog/ConfirmationDialog';
@@ -56,14 +55,10 @@ export default function Travels() {
   const [travelId, setTravelId] = useState('');
 
   const classes = useStyles();
-
   useEffect(() => {
     PACKLIST_SERVICE.allTravels()
       .then((res) => {
-        console.log('Inside DB Call');
-        console.log({ STATUS: res.status });
         const allTravelsFromDB = res.data;
-        console.log(allTravelsFromDB);
         if (allTravelsFromDB) {
           setTravels(allTravelsFromDB);
           setLoad(true);
@@ -73,9 +68,6 @@ export default function Travels() {
         setLoad(true);
       });
   }, []);
-
-  // React Router DOM CORE
-  let history = useHistory();
 
   const handleOpenDialog = (id) => {
     setTravelId(id);
@@ -87,9 +79,7 @@ export default function Travels() {
   };
 
   const handleDelete = async () => {
-    console.log('ALL GOOD TO GO!!!');
     let response = await PACKLIST_SERVICE.deleteTravel(travelId);
-    console.log({ response });
     if (response.status === 200) {
       let newArr = travels.filter((travel) => travel._id !== travelId);
       setTravels(newArr);
@@ -100,8 +90,6 @@ export default function Travels() {
   let previousTravels;
 
   if (load) {
-    console.log({ travels });
-
     upComing = travels
       .filter((travel) => {
         let a = moment.utc(travel.startDate);
@@ -110,7 +98,7 @@ export default function Travels() {
       })
       .map((el) => {
         return (
-          <Container maxWidth="lg">
+          <Container key={el._id} maxWidth="lg">
             <Grid container justify="center">
               <Grid item xs={8} justify="center" alignItems="center">
                 <TravelCity {...el} sure={handleOpenDialog} />
@@ -128,7 +116,7 @@ export default function Travels() {
       })
       .map((el) => {
         return (
-          <Container maxWidth="lg">
+          <Container key={el._id} maxWidth="lg">
             <Grid container justify="center">
               <Grid item xs={8} justify="center" alignItems="center">
                 <TravelCity {...el} sure={handleOpenDialog} />

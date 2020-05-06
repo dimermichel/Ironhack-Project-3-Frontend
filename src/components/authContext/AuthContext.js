@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import { withRouter } from 'react-router-dom';
 import AUTH_SERVICE from '../../services/AuthServices';
 
 const AuthContext = React.createContext();
@@ -23,10 +22,7 @@ class AuthProvider extends Component {
   componentDidMount() {
     AUTH_SERVICE.isLoggedIn()
       .then((responseFromServer) => {
-        // console.log('res: ', responseFromServer);
-
         const { user } = responseFromServer.data;
-        //localStorage.setItem('userData', JSON.stringify({ user }));
 
         this.setState((prevState) => ({
           ...prevState,
@@ -43,10 +39,7 @@ class AuthProvider extends Component {
     if (!this.state.currentUser && !this.state.isLoggedIn) {
       AUTH_SERVICE.isLoggedIn()
         .then((responseFromServer) => {
-          // console.log('res: ', responseFromServer);
-
           const { user } = responseFromServer.data;
-          //localStorage.setItem('userData', JSON.stringify({ user }));
 
           this.setState((prevState) => ({
             ...prevState,
@@ -108,12 +101,9 @@ class AuthProvider extends Component {
           currentUser: user,
           isLoggedIn: true,
         }));
-
-        alert(`${message}`);
         this.props.history.push('/');
       })
       .catch((err) => {
-        // console.log(err.response);
         if (err.response && err.response.data) {
           this.setState((prevState) => ({
             ...prevState,
@@ -124,7 +114,7 @@ class AuthProvider extends Component {
   };
 
   handleLoginSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     AUTH_SERVICE.login(this.state.formLogin)
       .then((response) => {
@@ -142,12 +132,8 @@ class AuthProvider extends Component {
           currentUser: user,
           isLoggedIn: true,
         }));
-
-        //alert(`${message}`);
-        this.props.history.push('/');
       })
       .catch((err) => {
-        // console.log(err.response);
         if (err.response && err.response.data) {
           this.setState((prevState) => ({
             ...prevState,
@@ -157,29 +143,18 @@ class AuthProvider extends Component {
       });
   };
 
-  // handleSignupGithubSubmit = e => {
-
-  //     e.preventDefault()
-  //     AUTH_SERVICE.signupGithub()
-  //         .then(response => {
-  //             console.log({response})
-  //         })
-  //         .catch(err => console.log(err))
-  // }
-
   handleLogout = (e) => {
-    e.preventDefault();
     AUTH_SERVICE.logout()
       .then(() => {
-        //localStorage.removeItem('userData');
         this.setState((prevState) => ({
           ...prevState,
           currentUser: {},
           isLoggedIn: false,
         }));
-        this.props.history.push('/');
       })
-      .catch((err) => alert('Error while logout: ', err));
+      .catch((err) => {
+        console.log('Error while logout: ', err);
+      });
   };
 
   render() {

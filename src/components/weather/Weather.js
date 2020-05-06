@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     borderRadius: 10,
-    height: 320,
+    height: 325,
   },
   details: {
     display: 'flex',
@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100% !important',
   },
   titleBar: {
-    background: '#3f51b5',
+    background: '#fa8d62',
     //'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
   },
 }));
@@ -117,7 +117,7 @@ export default function Weather(props) {
                       {moment(currentWeatherDate.datetime).format('ddd')} -{' '}
                       {moment(currentWeatherDate.datetime).format('ll')}
                     </Typography>
-                    <Typography variant="h6" color="textSecondary">
+                    <Typography variant="subtitle1" color="textSecondary">
                       {currentWeatherDate[0].description}
                     </Typography>
                   </CardContent>
@@ -154,7 +154,7 @@ export default function Weather(props) {
                       {moment(props.weather[0].datetime).format('ddd')} -{' '}
                       {moment(props.weather[0].datetime).format('ll')}
                     </Typography>
-                    <Typography variant="h5" color="textSecondary">
+                    <Typography variant="subtitle1" color="textSecondary">
                       {props.weather[0].description}
                     </Typography>
                   </CardContent>

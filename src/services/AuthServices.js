@@ -11,15 +11,7 @@ const service = axios.create({
 
 const AUTH_SERVICE = {
   signup(userData) {
-    console.log('Im beeing called');
-    // useData represents the req.body; //userData
     return service.post('/api/signup', userData);
-  },
-
-  signupGithub(userData) {
-    console.log('Im beeing called');
-    // useData represents the req.body; //userData
-    return service.get('/auth/github', userData);
   },
 
   login(userData) {

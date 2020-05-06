@@ -5,7 +5,6 @@ import PlacesAutocomplete, {
 } from 'react-places-autocomplete';
 import { classnames } from './helpers';
 import Grid from '@material-ui/core/Grid';
-import axios from 'axios';
 import './SearchBar.css';
 
 export default function SearchBar(props) {
@@ -19,8 +18,6 @@ export default function SearchBar(props) {
     const results = await geocodeByAddress(value);
     const latLng = await getLatLng(results[0]);
     props.getPlaceId(results[0].place_id);
-    //const placeDetails = await axios.get(`/api/google/${results[0].place_id}`);
-    //console.log(placeDetails.data);
     console.log(results);
     setAddress(value);
     setCoordinates(latLng);
@@ -31,8 +28,8 @@ export default function SearchBar(props) {
     setCoordinates({ lat: null, lng: null });
   };
 
-  console.log('Latidude', coordinates.lat);
-  console.log('Longitude', coordinates.lng);
+  //console.log('Latidude', coordinates.lat);
+  //console.log('Longitude', coordinates.lng);
 
   return (
     <>
@@ -78,7 +75,7 @@ export default function SearchBar(props) {
                   <div className="autocomplete-container">
                     {loading && <div>...loading</div>}
                     {suggestions.map((suggestion) => {
-                      console.log(suggestion);
+                      //console.log(suggestion);
                       const className = classnames('suggestion-item', {
                         'suggestion-item--active': suggestion.active,
                       });

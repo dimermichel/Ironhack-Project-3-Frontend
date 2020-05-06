@@ -11,7 +11,7 @@ import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
 import { v4 as uuidv4 } from 'uuid';
 import PACKLIST_SERVICE from '../../services/PackListServices';
 import SelectList from '../../components/selectList/SelectList';
-import { useHistory } from 'react-router-dom';
+import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '../../components/alert/Alert';
 
@@ -63,9 +63,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
 }));
 
-export default function StartPage() {
+export default function StartPage(props) {
   const [load, setLoad] = useState(false);
   const [loadExternal, setLoadExternal] = useState(false);
   const [response, setResponse] = useState({ data: [] });
@@ -76,6 +80,7 @@ export default function StartPage() {
 
   const classes = useStyles();
 
+  //console.log({props});
   useEffect(() => {
     PACKLIST_SERVICE.defaultList()
       .then((res) => {
@@ -95,23 +100,7 @@ export default function StartPage() {
       .catch((err) => {
         setLoad(true);
       });
-
-    // PACKLIST_SERVICE.defaultList()
-    //   .then((res) => {
-    //     if (res.data) {
-    //       //console.log(res.data);
-    //       setResponse([...res.data]);
-    //       console.log({ response });
-    //       setLoad(true);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     setLoad(true);
-    //   });
   }, []);
-
-  // React Router DOM CORE
-  let history = useHistory();
 
   const handleClick = async () => {
     if (checkInputs()) {
@@ -131,7 +120,7 @@ export default function StartPage() {
           externalAPIsResponse.data
         );
         console.log({ travelResponseDB });
-        history.push(`/travel/${travelResponseDB.data._id}`);
+        props.history.push(`/travel/${travelResponseDB.data._id}`);
         setLoadExternal(false);
       } catch (err) {
         console.log(err);
@@ -168,26 +157,10 @@ export default function StartPage() {
     setResponse({ data: updatedList });
   };
 
-  let result;
   let responseList;
 
   if (load) {
     responseList = <SelectList {...response} toggle={toggleSelect} />;
-    // result = response.map((el) => {
-    //   const id = uuidv4();
-    //   const items = el.items.map((item) => {
-    //     return { ...item, id: uuidv4() };
-    //   });
-    //   return (
-    //     <TodoList
-    //       key={id}
-    //       title={el.title}
-    //       type={el.type}
-    //       items={items}
-    //       completed={el.completed}
-    //     />
-    //   );
-    // });
   }
 
   const checkInputs = () => {
@@ -204,9 +177,16 @@ export default function StartPage() {
 
   return (
     <>
-      {/* Hero unit */}
       <div className={classes.heroContent}>
         <Container maxWidth="sm">
+          <div className={classes.center}>
+            <img
+              src="https://res.cloudinary.com/dimermichel/image/upload/v1588659703/ironhackProject3/app_logo2.png"
+              alt="logo"
+              height="150"
+              width="150"
+            />
+          </div>
           <Typography
             component="h1"
             variant="h2"
@@ -269,14 +249,11 @@ export default function StartPage() {
           </Typography>
         </Container>
       </div>
-      {/* <SelectList {...response} toggleSelect={toggleSelect} /> */}
       {responseList}
       <div className={classes.center}>
-        <Grid container spacing={2} justify="center">
-          <Grid item xs={6} justify="center">
-            {loadExternal && <CircularProgress />}
-          </Grid>
-        </Grid>
+        <Backdrop className={classes.backdrop} open={loadExternal}>
+          {loadExternal && <CircularProgress size={60} />}
+        </Backdrop>
         <Grid container spacing={2} justify="center">
           <Grid item xs={6}>
             <Button
@@ -287,7 +264,6 @@ export default function StartPage() {
               className={classes.button}
               onClick={handleClick}
               startIcon={<LocalMallOutlinedIcon />}
-              // endIcon={<FontAwesomeIcon icon={faChevronCircleRight} />}
             >
               Pack Your Bags
             </Button>
@@ -308,7 +284,6 @@ export default function StartPage() {
           </Alert>
         </Snackbar>
       </div>
-      {/* {result} */}
       {/* Footer */}
       <footer className={classes.footer}></footer>
       {/* End footer */}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -6,12 +6,14 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import WidgetsIcon from '@material-ui/icons/Widgets';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { AuthConsumer } from '../authContext/AuthContext';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,17 +39,18 @@ function ElevationScroll(props) {
   });
 }
 
-export default function MenuAppBar() {
+export default function NavBar(props) {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  let history = useHistory();
+  const [anchorElement, setAnchorElement] = useState(null);
+  const open = Boolean(anchorElement);
 
   const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorElement(event.currentTarget);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorElement(null);
   };
 
   return (
@@ -72,7 +75,7 @@ export default function MenuAppBar() {
                         to="/"
                         style={{ textDecoration: 'none', color: 'white' }}
                       >
-                        <WidgetsIcon />
+                        <LocalMallOutlinedIcon />
                       </Link>
                     </IconButton>
 
@@ -87,33 +90,45 @@ export default function MenuAppBar() {
                         >
                           <Button color="inherit">Travels</Button>
                         </Link>
-                        <IconButton
-                          aria-label="account of current user"
-                          aria-controls="menu-appbar"
-                          aria-haspopup="true"
-                          onClick={handleMenu}
-                          color="inherit"
-                        >
-                          <AccountCircle />
-                        </IconButton>
-                        <Menu
-                          id="menu-appbar"
-                          anchorEl={anchorEl}
-                          anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                          }}
-                          keepMounted
-                          transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                          }}
-                          open={open}
-                          onClose={handleClose}
-                        >
-                          <MenuItem onClick={handleClose}>Profile</MenuItem>
-                          <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                        </Menu>
+
+                        <div>
+                          <Button
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleMenu}
+                            color="inherit"
+                            style={{ marginLeft: '3vw' }}
+                          >
+                            <AccountCircle style={{ marginRight: '1vw' }} />
+                            {context.state.currentUser.username}
+                          </Button>
+                          <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorElement}
+                            anchorOrigin={{
+                              vertical: 'top',
+                              horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                              vertical: 'top',
+                              horizontal: 'right',
+                            }}
+                            open={open}
+                            onClose={handleClose}
+                          >
+                            <MenuItem
+                              onClick={() => {
+                                handleLogout();
+                                handleClose();
+                                history.push('/login');
+                              }}
+                            >
+                              Logout
+                            </MenuItem>
+                          </Menu>
+                        </div>
                       </>
                     ) : (
                       <>
@@ -134,7 +149,6 @@ export default function MenuAppBar() {
                   </Toolbar>
                 </AppBar>
                 {console.log(context.state)}
-                {() => console.log(new Date())}
               </>
             </ElevationScroll>
           </>

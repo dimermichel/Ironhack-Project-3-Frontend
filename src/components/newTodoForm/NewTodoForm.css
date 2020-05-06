@@ -19,20 +19,16 @@
   .NewTodoForm button {
     padding: 0 1.3rem;
     border: none;
-    background: rgba(29, 43, 122, 0.8);
     border-radius: 4px;
     color: white;
     text-transform: uppercase;
     font-weight: bold;
-    border: 1px solid rgba(255, 255, 255, 0.3);
     margin-left: 5px;
     cursor: pointer;
     transition: background 0.4s ease-out;
     outline: none;
   }
-  .NewTodoForm button:hover {
-    background: rgb(47, 61, 143);
-  }
+
   .NewTodoForm input,
   .NewTodoForm button {
     height: 3rem;
