@@ -1,10 +1,10 @@
-import React, { useState } from './node_modules/react';
+import React, { useState } from 'react';
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
-} from './node_modules/react-places-autocomplete';
+} from 'react-places-autocomplete';
 import { classnames } from './helpers';
-import Grid from './node_modules/@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 import './SearchBar.css';
 
 export default function SearchBar(props) {
