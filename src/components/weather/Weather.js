@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Weather(props) {
   const [celsius, setCelsius] = useState(true);
   const classes = useStyles();
-  const today = moment();
+  let today = moment();
   const currentWeatherDate = props.weather.filter((el) =>
     moment(moment(el.datetime, 'YYYY-MM-DD')).isSame(
       moment(today, 'YYYY-MM-DD'),
@@ -94,6 +94,7 @@ export default function Weather(props) {
   const converterFahrenheit = (temp) => Math.round(temp * 1.8 + 32);
 
   console.log({ currentWeatherDate });
+  console.log({props});
   return (
     <Container maxWidth="lg">
       <Grid container justify="center">
