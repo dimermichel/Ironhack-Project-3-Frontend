@@ -92,7 +92,7 @@ export default function Weather(props) {
 
   const toggleScale = () => setCelsius(!celsius);
   const converterFahrenheit = (temp) => Math.round(temp * 1.8 + 32);
-
+  console.log({ props });
   console.log({ currentWeatherDate });
   return (
     <Container maxWidth="lg">
@@ -167,9 +167,8 @@ export default function Weather(props) {
                       />
                       <Typography component="h1" variant="h2">
                         {celsius
-                          ? Math.round(currentWeatherDate[0].temp) + 'ºC'
-                          : converterFahrenheit(currentWeatherDate[0].temp) +
-                            'ºF'}
+                          ? Math.round(props.weather[0].temp) + 'ºC'
+                          : converterFahrenheit(props.weather[0].temp) + 'ºF'}
                       </Typography>
                     </Grid>
                   </Container>
