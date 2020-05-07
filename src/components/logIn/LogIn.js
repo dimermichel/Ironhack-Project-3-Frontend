@@ -12,7 +12,7 @@ import { AuthConsumer } from '../authContext/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { CssBaseline, Typography, createMuiTheme } from '@material-ui/core';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect, BrowserRouter } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -114,13 +114,14 @@ function SignIn(props) {
                     value={password}
                     onChange={handleLoginInput}
                   />
+
                   <Button
                     fullWidth
                     variant="contained"
                     color="primary"
                     className={classes.submit}
-                    onClick={() => {
-                      handleLoginSubmit();
+                    onClick={async () => {
+                      await handleLoginSubmit();
                       props.history.push('/');
                     }}
                   >

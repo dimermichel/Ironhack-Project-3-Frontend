@@ -5044,4 +5044,4 @@ const newAtractionsArr = atractions.results.map((el) => {
 
 newTravel.atractions = newAtractionsArr;
 
-console.log(newTravel);
+//console.log(newTravel);

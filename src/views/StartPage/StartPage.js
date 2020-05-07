@@ -93,7 +93,7 @@ export default function StartPage(props) {
             return { ...el, id: id, selected: false };
           });
           setResponse({ data: mappedArr });
-          console.log({ response });
+          //console.log({ response });
           setLoad(true);
         }
       })
@@ -104,22 +104,22 @@ export default function StartPage(props) {
 
   const handleClick = async () => {
     if (checkInputs()) {
-      console.log('ALL GOOD TO GO!!!');
+      //console.log('ALL GOOD TO GO!!!');
       setLoadExternal(true);
       try {
         const listResponseDB = await PACKLIST_SERVICE.sendList(response.data);
-        console.log({ listResponseDB });
+        //console.log({ listResponseDB });
         const externalAPIsResponse = await PACKLIST_SERVICE.externalAPIs(
           placeId.googleCityId
         );
-        console.log({ externalAPIsResponse });
+        //console.log({ externalAPIsResponse });
         externalAPIsResponse.data.startDate = initialDate;
         externalAPIsResponse.data.endDate = finalDate;
         externalAPIsResponse.data.fullList = listResponseDB.data._id;
         const travelResponseDB = await PACKLIST_SERVICE.sendTravel(
           externalAPIsResponse.data
         );
-        console.log({ travelResponseDB });
+        //console.log({ travelResponseDB });
         props.history.push(`/travel/${travelResponseDB.data._id}`);
         setLoadExternal(false);
       } catch (err) {
@@ -153,7 +153,7 @@ export default function StartPage(props) {
       }
       return list;
     });
-    console.log({ id }, { updatedList });
+    //console.log({ id }, { updatedList });
     setResponse({ data: updatedList });
   };
 
@@ -166,10 +166,10 @@ export default function StartPage(props) {
   const checkInputs = () => {
     let selectedList = false;
     if (response.data.some((list) => list.selected === true)) {
-      console.log('Object found inside the array.');
+      //console.log('Object found inside the array.');
       selectedList = true;
     } else {
-      console.log('Object not found.');
+      //console.log('Object not found.');
       selectedList = false;
     }
     return placeId.googleCityId !== '' && selectedList ? true : false;

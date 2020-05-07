@@ -63,7 +63,14 @@ function SignUp(props) {
         <AuthConsumer>
           {(context) => {
             const {
-              formSignup: { username, email, password },
+              formSignup: {
+                username,
+                usernameErr,
+                email,
+                emailErr,
+                password,
+                passwordErr,
+              },
             } = context.state;
             const { handleSignupInput, handleSignupSubmit } = context;
 
@@ -88,18 +95,15 @@ function SignUp(props) {
                 <Typography variant="subtitle1" gutterBottom>
                   Or Be Classical
                 </Typography>
-                <form
-                  onSubmit={handleSignupSubmit}
-                  className={classes.form}
-                  noValidate
-                >
+                <div className={classes.form}>
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <TextField
+                        error={usernameErr}
                         autoComplete="fname"
                         name="username"
                         variant="outlined"
-                        required
+                        helperText={usernameErr}
                         fullWidth
                         value={username}
                         onChange={handleSignupInput}
@@ -110,42 +114,47 @@ function SignUp(props) {
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
+                        error={emailErr}
                         variant="outlined"
-                        required
                         fullWidth
                         value={email}
                         onChange={handleSignupInput}
                         id="email"
                         label="Email Address"
+                        helperText={emailErr}
                         name="email"
                         autoComplete="email"
                       />
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
+                        error={passwordErr}
                         variant="outlined"
-                        required
                         fullWidth
                         value={password}
                         onChange={handleSignupInput}
                         name="password"
                         label="Password"
                         type="password"
+                        helperText={passwordErr}
                         id="password"
                         autoComplete="current-password"
                       />
                     </Grid>
                   </Grid>
                   <Button
-                    type="submit"
                     fullWidth
                     variant="contained"
                     color="primary"
                     className={classes.submit}
+                    onClick={async () => {
+                      await handleSignupSubmit();
+                      props.history.push('/');
+                    }}
                   >
                     Sign Up
                   </Button>
-                </form>
+                </div>
                 <Grid container justify="flex-end">
                   <Grid item>
                     <Link href="/login" variant="body2">

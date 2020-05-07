@@ -148,7 +148,7 @@ export default function NavBar(props) {
                     )}
                   </Toolbar>
                 </AppBar>
-                {console.log(context.state)}
+                {/* {console.log(context.state)} */}
               </>
             </ElevationScroll>
           </>

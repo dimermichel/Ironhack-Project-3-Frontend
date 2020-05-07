@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TodoList = (props) => {
-  console.log('Receving the first PROPS >>>>>>', { props });
+  //console.log('Receving the first PROPS >>>>>>', { props });
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
   const [todo, setTodo] = useState({
@@ -77,16 +77,16 @@ const TodoList = (props) => {
 
   const remove = (id) => {
     setTodo({ items: todo.items.filter((el) => el._id !== id) });
-    console.log({ ITEMS: todo.items });
+    //console.log({ ITEMS: todo.items });
     let counter = 0;
     const arrLength = todo.items.length - 1;
-    console.log('Inside Remove');
-    console.log({ counter }, { arrLength });
+    //console.log('Inside Remove');
+    //console.log({ counter }, { arrLength });
     todo.items.map((todo) => {
       if (todo.checked) counter++;
-      console.log('Inside MAP ARR');
-      console.log(todo);
-      console.log({ counter }, { arrLength });
+      //console.log('Inside MAP ARR');
+      //console.log(todo);
+      //console.log({ counter }, { arrLength });
       if (counter === arrLength) {
         setCompletion({ completed: true });
       } else {

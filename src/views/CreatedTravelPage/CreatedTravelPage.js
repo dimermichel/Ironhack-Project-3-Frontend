@@ -79,9 +79,9 @@ export default function CreatedTravelPage() {
   useEffect(() => {
     PACKLIST_SERVICE.detailTravel(id)
       .then((res) => {
-        console.log('Inside DB Call');
+        //console.log('Inside DB Call');
         const cityInfo = res.data;
-        console.log(cityInfo);
+        //console.log(cityInfo);
         if (cityInfo) {
           const cityDetails = {};
           cityDetails.city = cityInfo.city;
@@ -95,7 +95,7 @@ export default function CreatedTravelPage() {
           setWeather({ weather: cityInfo.weather });
           setInitialDate({ initial: cityInfo.startDate });
           setFinalDate({ final: cityInfo.endDate });
-          console.log({ fullList });
+          //console.log({ fullList });
           setLoad(true);
         }
       })
@@ -115,9 +115,9 @@ export default function CreatedTravelPage() {
   };
 
   const handleClick = async () => {
-    console.log('ALL GOOD TO GO!!!');
+    //console.log('ALL GOOD TO GO!!!');
     setLoadExternal(true);
-    console.log({ fullList });
+    //console.log({ fullList });
     let copyArray = {};
     copyArray = { ...fullList };
     //console.log({ copyArray });
@@ -134,7 +134,7 @@ export default function CreatedTravelPage() {
         fullList._id,
         copyArray.lists
       );
-      console.log({ listResponseDB });
+      //console.log({ listResponseDB });
       setLoadExternal(false);
       history.push(`/travels`);
     } catch (err) {
@@ -143,7 +143,7 @@ export default function CreatedTravelPage() {
   };
 
   const handleListUpdate = (_id, todo, completion) => {
-    console.log({ _id, todo, completion });
+    //console.log({ _id, todo, completion });
 
     let copyArray = {};
     copyArray = { ...fullList };
@@ -165,7 +165,7 @@ export default function CreatedTravelPage() {
   let city;
 
   if (load) {
-    console.log({ fullList });
+    //console.log({ fullList });
     result = fullList.lists
       .filter((list) => list.selected === true)
       .map((el) => {

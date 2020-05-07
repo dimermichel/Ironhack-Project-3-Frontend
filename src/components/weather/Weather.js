@@ -92,8 +92,8 @@ export default function Weather(props) {
 
   const toggleScale = () => setCelsius(!celsius);
   const converterFahrenheit = (temp) => Math.round(temp * 1.8 + 32);
-  console.log({ props });
-  console.log({ currentWeatherDate });
+  //console.log({ props });
+  //console.log({ currentWeatherDate });
   return (
     <Container maxWidth="lg">
       <Grid container justify="center">

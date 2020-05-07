@@ -6,7 +6,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => (
   <AuthConsumer>
     {(context) => (
       <>
-        {console.log(context)}
+        {/* {console.log(context)} */}
         <Route
           render={(props) =>
             context.isLoggedIn ? <Component {...props} /> : <Redirect to="/" />

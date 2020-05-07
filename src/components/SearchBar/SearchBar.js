@@ -18,7 +18,7 @@ export default function SearchBar(props) {
     const results = await geocodeByAddress(value);
     const latLng = await getLatLng(results[0]);
     props.getPlaceId(results[0].place_id);
-    console.log(results);
+    //console.log(results);
     setAddress(value);
     setCoordinates(latLng);
   };

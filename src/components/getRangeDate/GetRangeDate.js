@@ -30,7 +30,7 @@ export default function GetRangeDate(props) {
   maxDate.setDate(maxDate.getDate() + 16);
 
   const handleClick = (event) => {
-    console.log({ event });
+    //console.log({ event });
     setAnchorEl(anchorEl ? null : event.currentTarget);
   };
 
@@ -108,7 +108,7 @@ export default function GetRangeDate(props) {
                     );
                     setAnchorEl(anchorEl && null);
 
-                    console.log(date);
+                    //console.log(date);
                   }
                 }}
                 locale={{
