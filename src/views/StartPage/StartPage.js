@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import Container from '@material-ui/core/Container';
-import SearchBar from '../../components/searchBar/SearchBar';
+import SearchBar from '../../components/SearchBar/SearchBar';
 import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
 import { v4 as uuidv4 } from 'uuid';
 import PACKLIST_SERVICE from '../../services/PackListServices';
