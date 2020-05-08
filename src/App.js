@@ -62,6 +62,7 @@ function App() {
             <Switch>
               <Route exact path="/login" component={LogIn} />
               <Route exact path="/signup" component={SignUp} />
+              <Route exact path="/dashboard" component={Travels} />
               {isLoggedIn.logged ? (
                 <>
                   <Route exact path="/travels" component={Travels} />

@@ -12,7 +12,8 @@ import { AuthConsumer } from '../authContext/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { CssBaseline, Typography, createMuiTheme } from '@material-ui/core';
-import { withRouter, Redirect, BrowserRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import Alert from '../../components/alert/Alert';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -47,13 +48,12 @@ const themeBtn = createMuiTheme({
 
 function SignIn(props) {
   const classes = useStyles();
-
-  //console.log({props});
   return (
     <AuthConsumer>
       {(context) => {
         const {
-          formLogin: { email, password },
+          formLogin: { email, password, emailErr, passwordErr },
+          message,
         } = context.state;
         const { handleLoginInput, handleLoginSubmit } = context;
 
@@ -89,6 +89,7 @@ function SignIn(props) {
                 </Typography>
                 <form className={classes.form}>
                   <TextField
+                    error={Boolean(emailErr)}
                     variant="outlined"
                     margin="normal"
                     required
@@ -97,11 +98,13 @@ function SignIn(props) {
                     label="Email Address"
                     name="email"
                     autoComplete="email"
+                    helperText={emailErr}
                     value={email}
                     onChange={handleLoginInput}
                     autoFocus
                   />
                   <TextField
+                    error={Boolean(passwordErr)}
                     variant="outlined"
                     margin="normal"
                     required
@@ -111,9 +114,19 @@ function SignIn(props) {
                     type="password"
                     id="password"
                     autoComplete="current-password"
+                    helperText={passwordErr}
                     value={password}
                     onChange={handleLoginInput}
                   />
+
+                  {message && (
+                    <Alert severity="error">
+                      {message}.{' '}
+                      <span role="img" aria-label="glasses">
+                        🤓
+                      </span>
+                    </Alert>
+                  )}
 
                   <Button
                     fullWidth
@@ -122,11 +135,11 @@ function SignIn(props) {
                     className={classes.submit}
                     onClick={async () => {
                       await handleLoginSubmit();
-                      props.history.push('/');
                     }}
                   >
                     Sign In
                   </Button>
+
                   <Grid container>
                     <Grid item>
                       <Link href="/signup" variant="body2">

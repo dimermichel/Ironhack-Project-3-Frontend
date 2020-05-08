@@ -99,7 +99,7 @@ function SignUp(props) {
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <TextField
-                        error={usernameErr}
+                        error={Boolean(usernameErr)}
                         autoComplete="fname"
                         name="username"
                         variant="outlined"
@@ -114,7 +114,7 @@ function SignUp(props) {
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
-                        error={emailErr}
+                        error={Boolean(emailErr)}
                         variant="outlined"
                         fullWidth
                         value={email}
@@ -128,7 +128,7 @@ function SignUp(props) {
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
-                        error={passwordErr}
+                        error={Boolean(passwordErr)}
                         variant="outlined"
                         fullWidth
                         value={password}
@@ -149,7 +149,6 @@ function SignUp(props) {
                     className={classes.submit}
                     onClick={async () => {
                       await handleSignupSubmit();
-                      props.history.push('/');
                     }}
                   >
                     Sign Up

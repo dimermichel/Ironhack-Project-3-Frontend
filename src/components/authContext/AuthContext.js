@@ -15,7 +15,9 @@ class AuthProvider extends Component {
     },
     formLogin: {
       email: '',
+      emailErr: '',
       password: '',
+      passwordErr: '',
     },
     currentUser: {},
     isLoggedIn: false,
@@ -67,7 +69,6 @@ class AuthProvider extends Component {
         [name]: value,
       },
     }));
-    //console.log(this.state.formSignup);
   };
 
   handleLoginInput = (e) => {
@@ -81,12 +82,11 @@ class AuthProvider extends Component {
         [name]: value,
       },
     }));
-    //console.log(this.state.formSignup);
   };
 
   validateEmail = (email) => {
     let regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    let result = regexEmail.test(String(email).toLowerCase())
+    let result = regexEmail.test(String(email).toLowerCase());
     //console.log(result);
     return result;
   };
@@ -94,11 +94,40 @@ class AuthProvider extends Component {
   validatePassword = (password) => {
     let regexPassword = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
     let result = regexPassword.test(String(password));
-    //console.log(result);
     return result;
   };
 
-  validateInputs = () => {
+  validateInputsFormLogin = () => {
+    let isErr = false;
+    let errors = {};
+
+    if (!this.validateEmail(this.state.formLogin.email)) {
+      errors.emailErr = 'Please enter a valid email';
+      isErr = true;
+    } else {
+      errors.emailErr = null;
+    }
+
+    if (this.state.formLogin.password.length === 0) {
+      errors.passwordErr = 'Password is required.';
+      isErr = true;
+    } else {
+      errors.passwordErr = null;
+    }
+
+    if (isErr) {
+      this.setState((prevState) => ({
+        ...prevState,
+        formLogin: {
+          ...prevState.formLogin,
+          ...errors,
+        },
+      }));
+    }
+    return isErr;
+  };
+
+  validateInputsFormSubmit = () => {
     let isErr = false;
     let errors = {};
     if (this.state.formSignup.username.length < 4) {
@@ -116,7 +145,7 @@ class AuthProvider extends Component {
 
     if (!this.validatePassword(this.state.formSignup.password)) {
       errors.passwordErr =
-        'Password needs to have at least 6 chars and must contain at least one number, one lowercase and one uppercase letter.';
+        'Password needs to have at least 6 characteres and must contain at least one number, one lowercase and one uppercase letter.';
       isErr = true;
     } else {
       errors.passwordErr = null;
@@ -135,27 +164,30 @@ class AuthProvider extends Component {
   };
 
   handleSignupSubmit = (e) => {
-    const err = this.validateInputs();
-    //console.log(this.state.formSignup);
+    const err = this.validateInputsFormSubmit();
     if (!err) {
       AUTH_SERVICE.signup(this.state.formSignup)
         .then((response) => {
-          //console.log({ response });
           const {
             data: { user, message },
           } = response;
 
-          this.setState((prevState) => ({
-            ...prevState,
-            formSignup: {
-              username: '',
-              email: '',
-              password: '',
-            },
-            currentUser: user,
-            isLoggedIn: true,
-            message: null,
-          }));
+          this.setState(
+            (prevState) => ({
+              ...prevState,
+              formSignup: {
+                username: '',
+                email: '',
+                password: '',
+              },
+              currentUser: user,
+              isLoggedIn: true,
+              message: null,
+            }),
+            () => {
+              window.location.replace(process.env.REACT_APP_FRONTEND_URL);
+            }
+          );
         })
         .catch((err) => {
           if (err.response && err.response.data) {
@@ -170,32 +202,48 @@ class AuthProvider extends Component {
 
   handleLoginSubmit = (e) => {
     // e.preventDefault();
+    //console.log(this.props);
+    const err = this.validateInputsFormLogin();
+    if (!err) {
+      AUTH_SERVICE.login(this.state.formLogin)
+        .then((response) => {
+          const {
+            data: { user, message },
+          } = response;
 
-    AUTH_SERVICE.login(this.state.formLogin)
-      .then((response) => {
-        //console.log({ response });
-        const {
-          data: { user, message },
-        } = response;
-
-        this.setState((prevState) => ({
-          ...prevState,
-          formLogin: {
-            email: '',
-            password: '',
-          },
-          currentUser: user,
-          isLoggedIn: true,
-        }));
-      })
-      .catch((err) => {
-        if (err.response && err.response.data) {
-          this.setState((prevState) => ({
-            ...prevState,
-            message: err.response.data.message,
-          }));
-        }
-      });
+          this.setState(
+            (prevState) => ({
+              ...prevState,
+              formLogin: {
+                email: '',
+                password: '',
+              },
+              currentUser: user,
+              isLoggedIn: true,
+            }),
+            () => {
+              window.location.replace(process.env.REACT_APP_FRONTEND_URL);
+            }
+          );
+        })
+        .catch((err) => {
+          if (err.response && err.response.data) {
+            this.setState(
+              (prevState) => ({
+                ...prevState,
+                formLogin: {
+                  email: '',
+                  password: '',
+                },
+                message: 'Incorrect username or password',
+              }),
+              () => {
+                console.log('Error Case');
+              }
+            );
+          }
+        });
+    }
   };
 
   handleLogout = (e) => {
