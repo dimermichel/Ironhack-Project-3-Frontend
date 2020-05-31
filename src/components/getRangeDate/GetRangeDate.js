@@ -64,61 +64,73 @@ export default function GetRangeDate(props) {
             }}
           />
         </Grid>
-      </Grid>
 
-      <Popper id={id} open={open} anchorEl={anchorEl} transition>
-        {({ TransitionProps }) => (
-          <Fade {...TransitionProps} timeout={500}>
-            <div className={classes.paper}>
-              <InfiniteCalendar
-                Component={CalendarWithRange}
-                theme={{
-                  accentColor: 'rgb(212, 233, 229)',
-                  selectionColor: 'rgb(186, 218, 213)',
-                  textColor: {
-                    default: '#333',
-                    active: 'rgba(57, 96, 108, 0.96)',
-                  },
-                  todayColor: 'rgb(212, 233, 229)',
-                  weekdayColor: 'rgb(186, 218, 213)',
-                  headerColor: 'rgb(57, 96, 108)',
-                  floatingNav: {
-                    background: 'rgba(57, 96, 108, 0.96)',
-                    color: '#FFF',
-                    chevron: '#FFA726',
-                  },
-                }}
-                min={new Date()} // Minimum month to render
-                minDate={new Date()} // Minimum selectable date
-                maxDate={maxDate} // Max selectable date
-                selected={{
-                  start: props.initialDate,
-                  end: props.finalDate,
-                }}
-                onSelect={(date) => {
-                  // 3 => Double click event number
-                  if (date.eventType === 3) {
-                    props.getDate(date);
-                    setInputField(
-                      `${moment(date.start).format('MMMM Do YYYY')} - ${moment(
-                        date.end
-                      ).format('MMMM Do YYYY')} - ${
-                        moment(date.start).diff(date.end, 'days') * -1
-                      } days `
-                    );
-                    setAnchorEl(anchorEl && null);
-
-                    //console.log(date);
+        <Popper
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          placement="start"
+          transition
+        >
+          {({ TransitionProps }) => (
+            <Fade {...TransitionProps} timeout={500}>
+              <div className={classes.paper}>
+                <InfiniteCalendar
+                  width={
+                    window.innerWidth > 650
+                      ? window.innerWidth - window.innerWidth / 1.93
+                      : window.innerWidth - 100
                   }
-                }}
-                locale={{
-                  headerFormat: 'MMM Do',
-                }}
-              />
-            </div>
-          </Fade>
-        )}
-      </Popper>
+                  height={window.innerHeight - window.innerHeight / 1.5}
+                  Component={CalendarWithRange}
+                  theme={{
+                    accentColor: 'rgb(212, 233, 229)',
+                    selectionColor: 'rgb(186, 218, 213)',
+                    textColor: {
+                      default: '#333',
+                      active: 'rgba(57, 96, 108, 0.96)',
+                    },
+                    todayColor: 'rgb(212, 233, 229)',
+                    weekdayColor: 'rgb(186, 218, 213)',
+                    headerColor: 'rgb(57, 96, 108)',
+                    floatingNav: {
+                      background: 'rgba(57, 96, 108, 0.96)',
+                      color: '#FFF',
+                      chevron: '#FFA726',
+                    },
+                  }}
+                  min={new Date()} // Minimum month to render
+                  minDate={new Date()} // Minimum selectable date
+                  maxDate={maxDate} // Max selectable date
+                  selected={{
+                    start: props.initialDate,
+                    end: props.finalDate,
+                  }}
+                  onSelect={(date) => {
+                    // 3 => Double click event number
+                    if (date.eventType === 3) {
+                      props.getDate(date);
+                      setInputField(
+                        `${moment(date.start).format(
+                          'MMMM Do YYYY'
+                        )} - ${moment(date.end).format('MMMM Do YYYY')} - ${
+                          moment(date.start).diff(date.end, 'days') * -1
+                        } days `
+                      );
+                      setAnchorEl(anchorEl && null);
+
+                      //console.log(date);
+                    }
+                  }}
+                  locale={{
+                    headerFormat: 'MMM Do',
+                  }}
+                />
+              </div>
+            </Fade>
+          )}
+        </Popper>
+      </Grid>
     </div>
   );
 }
