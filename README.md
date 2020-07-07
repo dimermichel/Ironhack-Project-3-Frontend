@@ -10,10 +10,10 @@
 </p>
 
 <p align="center">
-<img width="70%" src="./travelpacking2.gif" alt="Travelpacking Usage"/>
+<img width="70%" src="public/images/travelpacking2.gif" alt="Travelpacking Usage"/>
 </p>
 
-> Final Ironhack Bootcamp Project - This app can help you plan you next trip and make sure that you pack your bags with the right stuff.
+> Final Ironhack Bootcamp Project - This app can help you plan your next trip and make sure that you pack your bags with the right stuff.
 
 ### ✨ [Demo](https://travelpacking.netlify.app/)
 
@@ -30,11 +30,11 @@ npm start
 ```
 
 ## Tecnologies used in this project
-- [ ] JavaScript
-- [ ] React - Hooks and Context API
-- [ ] Material-UI
-- [ ] Axios
-- [ ] Moment
+- `JavaScript`
+- `React` - Hooks and Context API
+- `Material-UI`
+- `Axios`
+- `Moment`
 
 ## Author
 
