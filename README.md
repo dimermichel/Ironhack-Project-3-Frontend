@@ -18,18 +18,50 @@
 ### ✨ [Demo](https://travelpacking.netlify.app/)
 
 ## Install
+This project has as a dependency the following the Backend:
+#### ⚙️ [Backend](https://github.com/dimermichel/Ironhack-Project-3-API)
+```sh
+$ git clone https://github.com/dimermichel/Ironhack-Project-3-API.git
+$ npm install
+$ npm start
+```
+You have to create and configure a .env file in the root folder with the following variables:
+
+- PORT
+- SESS_SECRET
+- MONGODB_URI
+- CLIENT_GITHUB_ID
+- CLIENT_GITHUB_SECRET
+- TRIPOSO_ID
+- TRIPOSO_KEY
+- WEATHERBIT_KEY
+- MAPS_API_KEY
+- BASE_URL
+- FRONTEND_URL
+- CLOUDINARY_NAME
+- CLOUDINARY_KEY
+- CLOUDINARY_SECRET
+
+#### 🖥 [Frontend](https://github.com/dimermichel/Ironhack-Project-3-Frontend)
 
 ```sh
-npm install
+$ git clone https://github.com/dimermichel/Ironhack-Project-3-Frontend
+$ npm install
+$ npm start
 ```
+You have to create and configure a .env file in the root folder with the following variables:
 
-## Usage
+- REACT_APP_SERVER_URL
+- REACT_APP_FRONTEND_URL
+- REACT_APP_GOOGLE_KEY
 
-```sh
-npm start
-```
+## Third-party API integration:
+- [Google Places](https://developers.google.com/places/web-service/overview)
+- [Triposo](https://www.triposo.com/api/documentation/20200405/)
+- [Weatherbit](https://www.weatherbit.io/api)
+- [Cloudinary](https://cloudinary.com/)
 
-## Tecnologies used in this project
+## Technologies utilized in this project:
 - `JavaScript`
 - `React` - Hooks and Context API
 - `Material-UI`
