@@ -19,9 +19,10 @@
 
 ## Install
 This project has as a dependency the following the Backend:
-#### ⚙️ [Backend](https://github.com/dimermichel/Ironhack-Project-3-API)
+#### ⚙️. [Backend](https://github.com/dimermichel/Ironhack-Project-3-API)
 ```sh
 $ git clone https://github.com/dimermichel/Ironhack-Project-3-API.git
+$ cd ironhack-project-3-api
 $ npm install
 $ npm start
 ```
@@ -42,10 +43,11 @@ You have to create and configure a .env file in the root folder with the followi
 - CLOUDINARY_KEY
 - CLOUDINARY_SECRET
 
-#### 🖥 [Frontend](https://github.com/dimermichel/Ironhack-Project-3-Frontend)
+#### 🖥. [Frontend](https://github.com/dimermichel/Ironhack-Project-3-Frontend)
 
 ```sh
 $ git clone https://github.com/dimermichel/Ironhack-Project-3-Frontend
+$ cd ironhack-project-3-frontend
 $ npm install
 $ npm start
 ```
@@ -64,6 +66,7 @@ You have to create and configure a .env file in the root folder with the followi
 ## Technologies utilized in this project:
 - `JavaScript`
 - `React` - Hooks and Context API
+- `MongoDB`
 - `Material-UI`
 - `Axios`
 - `Moment`
