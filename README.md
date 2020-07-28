@@ -46,7 +46,7 @@ You have to create and configure a .env file in the root folder with the followi
 #### 🖥. [Frontend](https://github.com/dimermichel/Ironhack-Project-3-Frontend)
 
 ```sh
-$ git clone https://github.com/dimermichel/Ironhack-Project-3-Frontend
+$ git clone https://github.com/dimermichel/Ironhack-Project-3-Frontend.git
 $ cd ironhack-project-3-frontend
 $ npm install
 $ npm start
