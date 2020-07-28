@@ -18,7 +18,7 @@
 ### ✨ [Demo](https://travelpacking.netlify.app/)
 
 ## Install
-This project has as a dependency the following the Backend:
+This project has as a dependency of the following Backend:
 #### ⚙️. [Backend](https://github.com/dimermichel/Ironhack-Project-3-API)
 ```sh
 $ git clone https://github.com/dimermichel/Ironhack-Project-3-API.git
