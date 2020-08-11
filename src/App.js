@@ -3,6 +3,7 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import SignUp from './components/signUp/SignUp';
 import axios from 'axios';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Landing from './views/Landing';
 import LogIn from './components/logIn/LogIn';
 import Travels from './views/Travels/Travels';
 import CreatedTravelPage from './views/CreatedTravelPage/CreatedTravelPage';
@@ -17,7 +18,7 @@ import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import theme from './Theme';
 
 const useStyles = makeStyles((theme) => ({
-  // Center the loading spiner
+  // Center the loading spinner
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: '#fff',
@@ -50,7 +51,7 @@ function App() {
         setError(err.message);
         setLoad(true);
       });
-  }, []);
+  }, [service]);
 
   if (load) {
     return (
@@ -58,13 +59,14 @@ function App() {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <AuthProvider>
-            <Navbar {...isLoggedIn} />
             <Switch>
+              <Route exact path="/" component={Landing} />
               <Route exact path="/login" component={LogIn} />
               <Route exact path="/signup" component={SignUp} />
               <Route exact path="/dashboard" component={Travels} />
               {isLoggedIn.logged ? (
                 <>
+                  <Navbar {...isLoggedIn} />
                   <Route exact path="/travels" component={Travels} />
                   <Route
                     exact
@@ -72,12 +74,12 @@ function App() {
                     component={CreatedTravelPage}
                   />
                   <Route exact path="/" component={StartPage} />
+                  <Footer />
                 </>
               ) : (
                 <Redirect to="/login" />
               )}
             </Switch>
-            <Footer />
           </AuthProvider>
         </ThemeProvider>
       </>

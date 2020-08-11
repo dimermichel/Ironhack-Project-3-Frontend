@@ -1,0 +1,178 @@
+#page-container {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    color: var(--color-text-in-primary);
+    background: var(--color-primary);
+}
+
+.navbar {
+    width: 85%;
+    margin: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    width: 6rem;
+    margin-right: 3rem;
+    cursor: pointer;
+}
+
+.nav-buttons-container {
+    width: 24rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#page-landing {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-container img{
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.hero-image {
+    margin: 2rem 0;
+    width: 100%;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.logo-container h2{
+    font-family: Montserrat;
+    color: var(--color-secondary);
+    font-weight: 500;
+    font-size: 2.4rem;
+    line-height: 4.6rem;
+    margin-top: 0.8rem;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    margin: 3.2rem 0;
+}
+
+.button-login {
+    color: #fff;
+    padding: 10px 25px;
+    background: var(--color-secondary);
+    border-radius: 25px;
+    font-family: 'Montserrat';
+    font-weight: 600;
+    font-size: 1.8rem;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.button-login:hover {
+    background: var(--color-secondary-lighter);
+}
+
+.button-signup {
+    background: transparent;
+    font-family: 'Montserrat';
+    color: var(--color-secondary);
+    font-weight: 600;
+    font-size: 1.8rem;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    margin-right: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.button-signup:hover {
+    color: var(--color-secondary-lighter);
+}
+
+.buttons-container a{
+    width: 21rem;
+    height: 6rem;
+    border-radius: 6rem;
+    font: 600 2rem Montserrat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+    color: var(--color-button-text);
+
+    transition: background-color 0.2s;
+}
+
+.buttons-container a.try-it{
+    background: var(--color-hero);
+}
+
+.buttons-container a.try-it:hover{
+    background: var(--color-hero-dark);
+}
+
+@media (min-width: 1100px) {
+    #page-landing-content {
+        max-width: 100%;
+        
+        display: grid;
+        grid-template-rows: 350px 1fr;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "logo hero"
+            "buttons hero"
+        ;
+    }
+
+    .logo-container {
+        grid-area: logo;
+        align-self: center;
+        text-align: left;
+    }
+
+    .logo-container h2{
+        text-align: initial;
+        font-size: 3.6rem;
+        max-width: 75%;
+    }
+
+    .logo-container img{
+        height: 100%;
+    }
+
+    .hero-image {
+        grid-area: hero;
+        justify-self: center;
+        margin: auto;
+        width: 110%;
+        overflow: hidden;
+    }
+
+    .buttons-container {
+        grid-area: buttons;
+        margin-top: 0;
+        justify-content: flex-start;
+    }
+
+    .buttons-container a{
+        font-size: 2.4rem;
+    }
+}
