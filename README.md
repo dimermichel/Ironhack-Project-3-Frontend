@@ -15,8 +15,6 @@
 
 > Final Ironhack Bootcamp Project - This app can help you plan your next trip and make sure that you pack your bags with the right stuff.
 
-### ✨ [Demo](https://travelpacking.netlify.app/)
-
 ## Install
 This project has as a dependency of the following Backend:
 #### ⚙️. [Backend](https://github.com/dimermichel/Ironhack-Project-3-API)
